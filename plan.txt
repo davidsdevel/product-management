@@ -1,0 +1,44 @@
+
+categories
+
+{
+  name: String Unique NotNull
+  url: String Unique NotNull
+  icon: String
+}
+
+Products
+
+{
+  name: String
+  description: String
+  category: String
+  url: String
+  photo: String
+  price: String
+}
+
+
+URL: 
+/productos | Productos generales
+/productos/:id | producto sencillo
+/categoria/:id | categoria
+
+Dashboard
+  tabs:
+    categorias
+    productos
+
+
+
+Home
+  Slider
+  Categorias
+  Productos - Ultimos
+  Visitanos - Mapa
+  Contactos
+    Telefonos
+    Correo
+    Direccion
+    Horario
+  footer
