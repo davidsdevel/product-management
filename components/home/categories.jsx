@@ -54,10 +54,10 @@ export default function Categories() {
     <h2 className='text-2xl font-bold'>Categorias</h2>
     <div className='w-full overflow-auto'>
       <ul className='flex my-8'>
-        {categories.map((e, i) => <li key={e.name + i} className='p-4 bg-blue-500 flex items-center justify-center flex-col mx-4 rounded-full'>
+        {categories.map((e, i) => <li key={e.name + i} className='mx-4'>
           <Link href={`/categoria/${e.url}`}>
             <a>
-              <div className='flex flex-col items-center w-16 h-16'>
+              <div className='flex flex-col w-28 h-28 border justify-center items-center rounded-full hover:w-32 transition-all duration-150 ease'>
                 {e.icon}
                 <span>{e.name}</span>
               </div>
