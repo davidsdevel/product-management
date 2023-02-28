@@ -10,18 +10,25 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "deta": "^1.1.0",
+    "bcrypt": "^5.1.0",
+    "deta-base-orm": "^0.5.3",
+    "graphql": "^16.6.0",
+    "graphql-yoga": "^3.7.0",
     "next": "12.2.5",
+    "next-auth": "^4.19.2",
     "next-seo": "^5.15.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.7.1"
+    "react-icons": "^4.7.1",
+    "unsplash-js": "^7.0.15"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
     "eslint": "^8.34.0",
     "eslint-config-next": "^13.1.6",
+    "jest": "^29.4.3",
     "postcss": "^8.4.21",
+    "supertest": "^6.3.3",
     "tailwindcss": "^3.2.7"
   }
 }
