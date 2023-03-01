@@ -11,9 +11,17 @@ export default function App({
     ...pageProps
   }
 }) {
+  const noAdmin = !Component.isAdmin;
+
   return <SessionProvider session={session}>
-    <Nav/>
+    {
+      noAdmin &&
+      <Nav/>
+    }
     <Component {...pageProps} />
-    <Footer/>
+    {
+      noAdmin &&
+      <Footer/>
+    }
   </SessionProvider>
 }
