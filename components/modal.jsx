@@ -41,8 +41,7 @@ export default function Modal({children, isOpen, onClose}) {
       className='
         w-fit
         h-fit
-        max-w-4/5
-        md:max-w-11/12
+        max-w-[90%]
         max-h-full
         bg-white
         z-10

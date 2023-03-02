@@ -20,5 +20,14 @@ export default async function UnsplashAPI(req, res, query) {
 
   const {response} = photos;
 
+  response.results = response.results.map(e => {
+    return {
+      url: e.urls.regular,
+      thumbnail: e.urls.thumb,
+      raw: e.urls.raw,
+      download: e.links.download_location
+    };
+  })
+
   res.json(response);
 }

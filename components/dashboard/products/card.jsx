@@ -1,7 +1,7 @@
 import {FaTrashAlt, FaEdit} from 'react-icons/fa';
 
 export default function ProductCard({id, photo, name, category, price, onSelect}) {
-  return <li className='w-full flex my-4 md:w-1/2 md:my-0 md:mb-4 md:px-2'>
+  return <li className='w-full flex my-2 md:w-1/2 md:my-0 md:mb-4 md:px-2'>
     <div className='w-full flex p-2 bg-white rounded-xl shadow h-32'>
       <img src={'https://cdn.grupoelcorteingles.es/statics/manager/contents/images/uploads/2022/02/Hk3iak_J9.jpeg'/*photo*/} className='w-16 h-16 border rounded-lg border-gray-300' onClick={() => onSelect(id)} alt=''/>
       <div className='flex flex-col w-full justify-between'>

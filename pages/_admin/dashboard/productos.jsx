@@ -5,7 +5,6 @@ import Modal from '@/components/modal';
 import UploadForm from '@/components/dashboard/products/uploadForm';
 import PreviewCard from '@/components/dashboard/products/previewCard';
 
-
 function Products({products}) {
   const [isAddProductOpen, setIsAddProductOpen] = useState(false);
   const [isProductPreviewOpen, setIsProductPreviewOpen] = useState(false);
@@ -14,7 +13,7 @@ function Products({products}) {
   return <div>
     <div className='px-2 pt-4'>
       <ul className='flex flex-wrap items-start'>
-        <li className='md:w-1/2'>
+        <li className='md:w-1/2 md:px-2 w-full'>
           <button className='w-full border-4 border-gray-300 h-24 md:h-32 rounded-xl flex items-center justify-center' onClick={() => setIsAddProductOpen(true)}>
             <FaPlus className='text-gray-400'/>
             <span className='ml-1 text-sm font-bold text-gray-500'>Añadir producto</span>

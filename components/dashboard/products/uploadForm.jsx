@@ -78,10 +78,10 @@ export default function UploadForm({isOpen}) {
       <Select
         options={
           [
-            'Opcion 1',
-            'Opcion 2',
-            'Opcion 3',
-            'Opcion 4',
+            'Categoria 1',
+            'Categoria 2',
+            'Categoria 3',
+            'Categoria 4',
           ]
         }
       />
