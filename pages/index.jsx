@@ -16,15 +16,16 @@ export async function getStaticProps() {
 
   return {
     props: {
-      products
+      products,
+      categories
     }
   }
 }
 
-export default function Home({products}) {
+export default function Home({products, categories}) {
   return <>
     <Header/>
-    <Categories/>
+    <Categories categories={categories}/>
     <Products data={products}/>
     <Banner/>
     <Contact/>
