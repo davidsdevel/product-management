@@ -3,7 +3,7 @@ import Header from '@/components/categories/header';
 import CategoriesList from '@/components/categories';
 import {getAllProducts, getAllCategories} from '@/lib/dataFetchers';
 
-export async function getStaticProps({req, res}) {
+export async function getServerSideProps({req, res}) {
   const [categoriesResponse, productsResponse] = await Promise.all([
     getAllCategories(),
     getAllProducts()
