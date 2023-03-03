@@ -1,5 +1,7 @@
+import {useRouter} from 'next/router';
+import {SessionProvider} from "next-auth/react"
 import Footer from '@/components/footer';
-import { SessionProvider } from "next-auth/react"
+import Fallback from '@/components/fallback';
 import Nav from '@/components/nav';
 import '../styles/global.css';
 
@@ -11,7 +13,11 @@ export default function App({
     ...pageProps
   }
 }) {
+  const router = useRouter();
   const noAdmin = !Component.isAdmin;
+
+  if (router.isFallback)
+    return <Fallback/>
 
   return <SessionProvider session={session}>
     {

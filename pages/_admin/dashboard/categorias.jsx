@@ -1,11 +1,22 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Modal from '@/components/modal';
 import CategoryCard from '@/components/dashboard/categories/card';
 import CategoryForm from '@/components/dashboard/categories/categoryForm';
 import {FaPlus} from 'react-icons/fa';
+import {getAllCategories} from '@/lib/dataFetchers';
 
 function Categories() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    getAllCategories()
+      .then(({data}) => {
+        setIsLoading(false);
+        setCategories(data);
+      });
+  }, []);
 
   return <div>
     <div className='px-2 pt-4'>
@@ -16,17 +27,21 @@ function Categories() {
             <span className='ml-1 text-sm font-bold text-gray-500'>Añadir Categoria</span>
           </button>
         </li>
-        <CategoryCard name='Hierros' image='/images/ferreteria-banner.jpg'/>
-        {/*
-          products.map(e => <ProductCard key={e.id} onSelect={id => {
-            setProductPreview(id);
-            setIsProductPreviewOpen(true);
-          }} {...e}/>)
-        */}
+        {
+          isLoading
+            ? <li>
+                <span>Cargando</span>
+              </li>
+            : categories.map(e => <CategoryCard key={e.key} {...e}/>)
+        }
       </ul>
     </div>
     <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-      <CategoryForm/>
+      <CategoryForm onAddCategory={category => {
+        setCategories(prev => {
+          return prev.concat(category);
+        })
+      }}/>
     </Modal>
     <style jsx global>{`
       body {

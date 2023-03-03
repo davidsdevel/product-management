@@ -5,11 +5,17 @@ import Select from '@/components/select';
 import SearchImage from './searchImage';
 import {FaCamera} from 'react-icons/fa';
 import Modal from '@/components/modal';
+import {createCategory} from '@/lib/dataFetchers';
 
-export default function CategoryForm({isOpen}) {
+export default function CategoryForm({isOpen, onAddCategory}) {
   const [hasImage, setHasImage] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [name, setName] = useState('');
+  const [image, setImage] = useState('');
   const imageRef = useRef(null);
+
+  console.log(!name, !image)
+  console.log(name, image)
 
   useEffect(() => {
     if (!isOpen) {
@@ -37,16 +43,21 @@ export default function CategoryForm({isOpen}) {
       </span>
     </div>
     <div className='flex flex-col mt-8'>
-      <Input placeholder='Nombre de la categoria'/>
-      <Button className='bg-red-500 text-white mt-8'>Crear Categoria</Button>
+      <Input placeholder='Nombre de la categoria' onChange={({target: {value}}) => setName(value)} value={name}/>
+      <Button className='bg-red-500 text-white mt-8' disabled={!image || !name} onClick={async () => {
+        const newCategory = await createCategory({name, image});
+
+        onAddCategory(newCategory);
+      }}>Crear Categoria</Button>
     </div>
     <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
       <SearchImage
         onSelectImage={image => {
           setIsOpenModal(false);
           setHasImage(true);
+          setImage(image);
 
-          imageRef.current.style.backgroundImage = `url(${image}&w=70&q=25)`
+          imageRef.current.style.backgroundImage = `url(${image}&w=70&q=25)`;
         }}
         isOpen={isOpenModal}
       />

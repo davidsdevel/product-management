@@ -11,6 +11,9 @@ export const config = {
 export default createYoga({
   schema,
   multipart: false,
-  // Needed to be defined explicitly because our endpoint lives at a different path other than `/graphql`
   graphqlEndpoint: '/api/graphql/products',
+  cors: {
+    origin: process.env.NEXT_PUBLIC_VERCEL_URL,
+    methods: ['POST']
+  }
 });

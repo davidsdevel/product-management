@@ -4,7 +4,7 @@ import Button from '@/components/button';
 import Select from '@/components/select';
 import {FaCamera} from 'react-icons/fa';
 
-export default function UploadForm({isOpen}) {
+export default function UploadForm({isOpen, categories}) {
   const imageRef = useRef(null);
   const [hasImage, setHasImage] = useState(false);
 
@@ -76,14 +76,7 @@ export default function UploadForm({isOpen}) {
       <Input placeholder='Nombre del producto'/>
       <Input placeholder='Descripción del producto'/>
       <Select
-        options={
-          [
-            'Categoria 1',
-            'Categoria 2',
-            'Categoria 3',
-            'Categoria 4',
-          ]
-        }
+        options={categories}
       />
       <Button className='bg-red-500 text-white mt-8'>Subir Producto</Button>
     </div>
