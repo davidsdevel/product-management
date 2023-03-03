@@ -1,5 +1,5 @@
 import { createYoga } from 'graphql-yoga'
-import schema from '@/lib/graphql/schema';
+import schema from '../../../lib/graphql/schemas/products';
 
 export const config = {
   api: {
@@ -10,6 +10,7 @@ export const config = {
 
 export default createYoga({
   schema,
+  multipart: false,
   // Needed to be defined explicitly because our endpoint lives at a different path other than `/graphql`
-  graphqlEndpoint: '/api/graphql',
+  graphqlEndpoint: '/api/graphql/products',
 });
