@@ -43,6 +43,10 @@ export default function Modal({children, isOpen, onClose}) {
         h-fit
         max-w-[90%]
         max-h-full
+        transition-all
+        relative
+        ease
+        duration-300
         bg-white
         z-10
         rounded-lg

@@ -1,12 +1,16 @@
 import {useRef, useState, useEffect} from 'react';
 import Input from '@/components/input';
 import Button from '@/components/button';
+import Modal from '@/components/modal';
 import Select from '@/components/select';
+import Cropper from './cropper';
 import {FaCamera} from 'react-icons/fa';
 
 export default function UploadForm({isOpen, categories}) {
   const imageRef = useRef(null);
   const [hasImage, setHasImage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [image, setImage] = useState(null);
 
   const blobRef = useRef(null);
 
@@ -25,6 +29,7 @@ export default function UploadForm({isOpen, categories}) {
     if (!uploadInput) {
       uploadInput = createInput();
     }
+    uploadInput.accept = 'image/*';
 
     uploadInput.onchange = handleImages;
 
@@ -32,15 +37,9 @@ export default function UploadForm({isOpen, categories}) {
   }
 
   const handleImages = ({target: {files: [file]}}) => {
-    const fileReader = new FileReader();
-
-    fileReader.onloadend = ({target: {result}}) => {
-      imageRef.current.style.backgroundImage = `url(${result})`;
-
-      setHasImage(true);
-    };
-
-    fileReader.readAsDataURL(file);
+    console.log(file);
+    setImage(file);
+    setShowModal(true);
   }
 
   const addImage = () => {
@@ -80,5 +79,8 @@ export default function UploadForm({isOpen, categories}) {
       />
       <Button className='bg-red-500 text-white mt-8'>Subir Producto</Button>
     </div>
+    <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+      <Cropper image={image}/>
+    </Modal>
   </div>
 }

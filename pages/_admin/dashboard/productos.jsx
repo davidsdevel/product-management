@@ -5,6 +5,8 @@ import Modal from '@/components/modal';
 import UploadForm from '@/components/dashboard/products/uploadForm';
 import PreviewCard from '@/components/dashboard/products/previewCard';
 import {getAllProducts, getAllCategories} from '@/lib/dataFetchers';
+import Script from 'next/script';
+import Head from 'next/head';
 
 function Products() {
   const [isAddProductOpen, setIsAddProductOpen] = useState(false);
@@ -27,6 +29,10 @@ function Products() {
   }, []);
 
   return <div>
+    <Script src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js'/>
+    <Head>
+      <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css'/>
+    </Head>
     <div className='px-2 pt-4'>
       <ul className='flex flex-wrap items-start max-w-6xl m-auto'>
         <li className='md:w-1/2 md:px-2 w-full'>
