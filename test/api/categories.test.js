@@ -86,6 +86,32 @@ describe('Categories Testing', () => {
     });
   });
 
+  test('Get Category By Name', async () => {
+    const response = await createQuery(`query {
+      categoryByName(name: "Category Name") {
+        key,
+        name,
+        image
+      }
+    }`);
+
+    const {data} = response.body;
+
+    expect(response.headers["content-type"])
+      .toMatch(/json/);
+    
+    expect(response.status)
+      .toEqual(200);
+    
+    expect(data).toEqual({
+      categoryByName: {
+        key: testingDataId,
+        name: 'Category Name',
+        image: 'Image URL'
+      }
+    });
+  });
+
   test('Create Category', async () => {
     const response = await createQuery(`mutation {
       createCategory(name: "Testing Name", image: "Testing Image") {

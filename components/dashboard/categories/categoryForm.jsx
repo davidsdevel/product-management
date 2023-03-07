@@ -6,6 +6,7 @@ import SearchImage from './searchImage';
 import {FaCamera} from 'react-icons/fa';
 import Modal from '@/components/modal';
 import {createCategory} from '@/lib/dataFetchers';
+import sanitize from '@/lib/sanitizeCategoryName';
 
 export default function CategoryForm({isOpen, onAddCategory}) {
   const [hasImage, setHasImage] = useState(false);
@@ -13,9 +14,6 @@ export default function CategoryForm({isOpen, onAddCategory}) {
   const [name, setName] = useState('');
   const [image, setImage] = useState('');
   const imageRef = useRef(null);
-
-  console.log(!name, !image)
-  console.log(name, image)
 
   useEffect(() => {
     if (!isOpen) {
@@ -45,7 +43,9 @@ export default function CategoryForm({isOpen, onAddCategory}) {
     <div className='flex flex-col mt-8'>
       <Input placeholder='Nombre de la categoria' onChange={({target: {value}}) => setName(value)} value={name}/>
       <Button className='bg-red-500 text-white mt-8' disabled={!image || !name} onClick={async () => {
-        const newCategory = await createCategory({name, image});
+        const normalizedName = sanitize(name);
+
+        const newCategory = await createCategory({name: normalizedName, image});
 
         onAddCategory(newCategory);
       }}>Crear Categoria</Button>

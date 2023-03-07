@@ -1,16 +1,20 @@
 import Card from '@/components/product/card';
+import Header from '@/components/categories/header';
 import Recommendation from '@/components/product/recommendation';
 import CategoriesList from '@/components/categories';
-import {getProduct, getAllCategories, getAllProducts} from '@/lib/dataFetchers';
+import {getProduct, getAllCategories, getAllProducts, getCategoryByName} from '@/lib/dataFetchers';
 
-export default function Categories({product, recommended, categories}) {
-  return <div className='flex flex-row my-16'>
-    <div className='w-full md:w-3/4'>
-      <Card data={product}/>
-      <Recommendation data={recommended}/>
+export default function Categories({product, recommended, categories, category}) {
+  return <>
+    <Header {...category}/>
+    <div className='flex flex-row my-16'>
+      <div className='w-full md:w-3/4'>
+        <Card data={product}/>
+        <Recommendation data={recommended}/>
+      </div>
+      <CategoriesList data={categories}/>
     </div>
-    <CategoriesList data={categories}/>
-  </div>
+  </>
 }
 
 export async function getStaticPaths() {
@@ -30,19 +34,23 @@ export async function getStaticProps({params}) {
       notFound: true
     }
 
-  const [categoriesResponse, recommendedResponse] = await Promise.all([
+  const [categoriesResponse, recommendedResponse, categoryResponse] = await Promise.all([
     getAllCategories({fields: ['name']}),
-    getAllProducts({limit: 4}) //TODO: Change recommended searchMethod
+
+    getAllProducts({limit: 4}), //TODO: Change recommended searchMethod
+    getCategoryByName(product.category)
   ]);
 
   const {data: categories} = categoriesResponse;
   const {data: recommended} = recommendedResponse;
+  const {data: category} = categoryResponse;
   
   return {
     props: {
       product,
       recommended,
-      categories
+      categories,
+      category
     }
   }
 }
