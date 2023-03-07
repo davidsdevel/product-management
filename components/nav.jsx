@@ -23,9 +23,9 @@ export default function Nav() {
         <Link href='/productos'>
           <a className='my-2 md:my-0 w-full bg-white hover:bg-slate-100 px-4 py-4 rounded-xl md:mx-2'>Productos</a>
         </Link>
-        <Link href='/categorias'>
+        {/*<Link href='/categorias'>
           <a className='my-2 md:my-0 w-full bg-white hover:bg-slate-100 px-4 py-4 rounded-xl md:mx-2'>Categorias</a>
-        </Link>
+        </Link>*/}
       </div>
     </div>
   </nav>

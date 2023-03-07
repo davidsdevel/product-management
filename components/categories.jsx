@@ -6,7 +6,7 @@ export default function Categories({data}) {
     <ul className='w-full flex flex-col'>
       {
         data.map(({name, path}) => <li key={name} className='w-full'>
-          <Link href={`/categoria/${path}`}>
+          <Link href={`/categorias/${path}`}>
             <a className='w-11/12 bg-slate-100 block text-center margin-auto py-1 rounded-md'>{name}</a>
           </Link>
         </li>)
