@@ -13,7 +13,7 @@ export default createYoga({
   multipart: false,
   graphqlEndpoint: '/api/graphql/products',
   cors: {
-    origin: process.env.NEXT_PUBLIC_VERCEL_URL,
+    origin: [process.env.NEXT_PUBLIC_VERCEL_URL, 'ferreteria-revision.vercel.app'],
     methods: ['POST']
   }
 });
