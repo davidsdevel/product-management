@@ -7,8 +7,15 @@ export default function middleware(req) {
   const isAuth = req.cookies.get('next-auth.session-token') || req.cookies.get('__Secure-next-auth.session-token');
   
   
+
   if (url.pathname.startsWith('/_admin')) {
     url.pathname = '/_error';
+    return NextResponse.rewrite(url);
+  }
+
+  if (url.pathname.startsWith('/uploads')) {
+    url.pathname = url.pathname.replace('/uploads', '/api/_uploads');
+    
     return NextResponse.rewrite(url);
   }
 
@@ -40,6 +47,8 @@ export default function middleware(req) {
 export const config = {
   matcher: [
     "/admin/:path*",
-    "/_admin/:path*"
+    "/_admin/:path*",
+    "/uploads/:path*",
+    "/_uploads/:path*"
   ]
 }
