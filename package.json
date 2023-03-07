@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
-    "browser-image-compression": "^2.0.2",
     "deta-base-orm": "^0.5.3",
     "firebase": "^9.17.2",
     "firebase-admin": "^11.5.0",

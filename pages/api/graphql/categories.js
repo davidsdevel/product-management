@@ -1,6 +1,8 @@
 import { createYoga } from 'graphql-yoga'
 import schema from '../../../lib/graphql/schemas/categories';
 
+const isDev = process.env.NODE_ENV !== 'production';
+
 export const config = {
   api: {
     // Disable body parsing (required for file uploads)
@@ -12,8 +14,12 @@ export default createYoga({
   schema,
   multipart: false,
   graphqlEndpoint: '/api/graphql/categories',
-  cors: {
-    origin: [process.env.NEXT_PUBLIC_VERCEL_URL, 'ferreteria-revision.vercel.app'],
-    methods: ['POST']
+  cors: req => {
+    const requestOrigin = req.headers.get('origin')
+
+    return {
+      origin: requestOrigin,
+      methods: ['POST']
+    }
   }
 });

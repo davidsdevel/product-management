@@ -5,6 +5,7 @@ import Footer from '@/components/footer';
 import Fallback from '@/components/fallback';
 import Nav from '@/components/nav';
 import {CgSpinner} from 'react-icons/cg';
+import { DefaultSeo } from 'next-seo';
 
 //Load Globaly Firebase Service
 import '@/lib/firebase/client';
@@ -39,6 +40,21 @@ export default function App({
     return <Fallback/>
 
   return <SessionProvider session={session}>
+    <DefaultSeo
+      titleTemplate='%s | Ferreteria El Gran Yo Soy'
+      defaultTitle='Ferreteria El Gran Yo Soy'
+      openGraph={{
+        type: 'website',
+        locale: 'es_LA',
+        url: 'https://www.ferreteriaelgrayosoy.com',
+        siteName: 'Ferreteria El Gran Yo Soy'
+      }}
+      twitter={{
+        handle: '@davidsdevel',
+        site: '@ferreyosoy',
+        cardType: 'summary_large_image',
+      }}
+    />
     {
       noAdmin &&
       <Nav/>
