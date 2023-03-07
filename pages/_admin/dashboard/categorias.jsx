@@ -1,9 +1,10 @@
-import {useState, useEffect} from 'react';
 import Modal from '@/components/modal';
+import {useState, useEffect} from 'react';
 import CategoryCard from '@/components/dashboard/categories/card';
 import CategoryForm from '@/components/dashboard/categories/categoryForm';
 import {FaPlus} from 'react-icons/fa';
 import {getAllCategories} from '@/lib/dataFetchers';
+import Layout from '@/components/dashboard/layout';
 
 function Categories() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +19,7 @@ function Categories() {
       });
   }, []);
 
-  return <div>
+  return <Layout>
     <div className='px-2 pt-4'>
       <ul className='flex flex-wrap items-start'>
         <li className='w-full md:w-1/2 md:px-2'>
@@ -48,7 +49,7 @@ function Categories() {
         background: #f3f4f6;
       }
     `}</style>
-  </div>
+  </Layout>
 }
 
 Categories.isAdmin = true;

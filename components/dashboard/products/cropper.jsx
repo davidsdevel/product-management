@@ -19,14 +19,13 @@ const createCropper = img => {
   });
 };
 
-export default function CropperModal({image, onClose}) {
+export default function CropperModal({image, onDone}) {
   const [edit, setEdit] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [fullImage, setFullImage] = useState('');
-  const [previewImage, setPreviewImage] = useState('');
 
   const cropper = useRef(null);
   const canvas = useRef(null);
+  const croppedImage = useRef(null);
 
   useEffect(() => {
     let currentCanvas = canvas.current;
@@ -37,7 +36,6 @@ export default function CropperModal({image, onClose}) {
 
       cropper.current = createCropper(canvas.current);
 
-      setFullImage(imageUrl);
       setShowModal(true);
     }
 
@@ -50,7 +48,6 @@ export default function CropperModal({image, onClose}) {
       if (cropper.current)
         cropper.current.destroy();
     }
-
   }, [image]);
 
   const cropDone = async () => {
@@ -59,17 +56,16 @@ export default function CropperModal({image, onClose}) {
       width: 400,
       height: 400,
     });
-    console.log(cropped);
 
-    canvas.current.src = cropped.toDataURL();
+    cropped.toBlob(async blob => {
+      croppedImage.current = blob;
 
-    setTimeout(async () => {
       canvas.current.src = cropped.toDataURL();
 
       await cropper.current.destroy();
 
       setEdit(false);
-    },  0);
+    }, 'image/webp', .75);
   };
 
   const cancelCrop = () => {
@@ -105,7 +101,7 @@ export default function CropperModal({image, onClose}) {
         </div>
       : <div key='preview'>
           <div className='flex'>
-            {/*<Button className='gray' onClick={upload}>Guardar</Button>*/}
+            <Button className='bg-red-500' onClick={() => onDone(croppedImage.current)}>Guardar</Button>
             <Button className='bg-red-500' onClick={cancelCrop}>Cancelar</Button>
           </div>
         </div>

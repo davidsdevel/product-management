@@ -7,6 +7,7 @@ import PreviewCard from '@/components/dashboard/products/previewCard';
 import {getAllProducts, getAllCategories} from '@/lib/dataFetchers';
 import Script from 'next/script';
 import Head from 'next/head';
+import Layout from '@/components/dashboard/layout';
 
 function Products() {
   const [isAddProductOpen, setIsAddProductOpen] = useState(false);
@@ -28,7 +29,7 @@ function Products() {
       });
   }, []);
 
-  return <div>
+  return <Layout>
     <Script src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js'/>
     <Head>
       <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css'/>
@@ -63,7 +64,17 @@ function Products() {
       </ul>
     </div>
     <Modal isOpen={isAddProductOpen} onClose={() => setIsAddProductOpen(false)}>
-      <UploadForm isOpen={isAddProductOpen} categories={categories}/>
+      <UploadForm
+        isOpen={isAddProductOpen}
+        categories={categories}
+        onDone={product => {
+          setProducts(prev => {
+            return prev.concat([product]);
+          });
+
+          setIsAddProductOpen(false);
+        }}
+      />
     </Modal>
     <Modal isOpen={isProductPreviewOpen} onClose={() => {
       setIsProductPreviewOpen(false)
@@ -76,7 +87,7 @@ function Products() {
         background: #f3f4f6;
       }
     `}</style>
-  </div>
+  </Layout>
 }
 
 Products.isAdmin = true;

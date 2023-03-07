@@ -3,7 +3,10 @@ import {SessionProvider} from "next-auth/react"
 import Footer from '@/components/footer';
 import Fallback from '@/components/fallback';
 import Nav from '@/components/nav';
-import '../styles/global.css';
+
+//Load Globaly Firebase Service
+import '@/lib/firebase/client';
+import '@/styles/global.css';
 
 //Dynamics
 export default function App({
