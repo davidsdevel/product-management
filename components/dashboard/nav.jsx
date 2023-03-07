@@ -9,12 +9,12 @@ const links = [
   {
     href: '/admin/productos',
     name: 'Productos',
-    icon: <FaShoppingCart className='mr-2 text-gray-400'/>
+    icon: <FaShoppingCart className='mr-2 text-gray-500'/>
   },
   {
     href: '/admin/categorias',
     name: 'Categorias',
-    icon: <MdCategory className='mr-2 text-gray-400'/>
+    icon: <MdCategory className='mr-2 text-gray-500'/>
   }
 ];
 
@@ -23,46 +23,52 @@ export default function DashboardNav() {
   const navRef = useRef(null);
   const shadowRef = useRef(null);
 
-  useEffect(() => {
-    if (isOpen) {
-      navRef.current.style.left = 0;
-      shadowRef.current.style.display = 'block';
+  const router = Router.useRouter();
 
-      setTimeout(() => {
-        shadowRef.current.style.opacity = .6;
-      }, 0);
-    } else {
-      navRef.current.style.left = '-100%';
-      shadowRef.current.style.opacity = 0;
+  console.log(router)
 
-      setTimeout(() => {
-        shadowRef.current.style.display = 'none';
-      }, 300);
+  useEffect(() => { 
+    if (window.screen.width < 768) {
+      if (isOpen) {
+        navRef.current.style.left = 0;
+        shadowRef.current.style.display = 'block';
+
+        setTimeout(() => {
+          shadowRef.current.style.opacity = .6;
+        }, 0);
+      } else {
+        navRef.current.style.left = '-100%';
+        shadowRef.current.style.opacity = 0;
+
+        setTimeout(() => {
+          shadowRef.current.style.display = 'none';
+        }, 300);
+      }
     }
   }, [isOpen]);
 
   return <>
-    <nav className='transition-all duration-300 ease z-10 bg-white fixed h-full flex flex-col top-0 -left-full shadow py-4 px-2' ref={navRef}>
+    <nav className='transition-all duration-300 ease z-10 bg-white fixed h-full flex flex-col top-0 -left-full shadow py-4 px-2 md:relative md:left-0' ref={navRef}>
       <ul className='flex flex-col items-center flex-grow'>
         {
           links.map(({name, href, icon}, i) => {
+            const isActive = href === router.asPath;
+
             return <li key={href + i} className='my-1'>
-              <Link href={href}>
-                <a className='py-4 px-4 bg-slate-100 w-full flex items-center rounded-xl'>
-                  {icon}
-                  <span className='text-xs font-bold'>{name}</span>
-                </a>
-              </Link>
+              <button className={`py-4 px-8 md:px-12 w-full flex items-center rounded-xl ${isActive ? 'bg-slate-300' : 'bg-slate-100'}`} disabled={isActive} onClick={() => Router.push(href)}>
+                {icon}
+                <span className='text-xs font-bold'>{name}</span>
+              </button>
             </li>
           })
         }
       </ul>
-      <button className='py-4 px-4 bg-slate-100 w-full flex items-center rounded-xl' onClick={async () => {
+      <button className='py-4 px-8 md:px-12 bg-slate-100 w-full flex items-center rounded-xl' onClick={async () => {
         await signOut({redirect: false});
 
-        Router.push('/');
+        Router.push('/admin');
       }}>
-        <FaPowerOff className='mr-2 text-gray-400'/>
+        <FaPowerOff className='mr-2 text-gray-500'/>
         <span className='text-xs font-bold'>Cerrar Sesión</span>
       </button>
     </nav>

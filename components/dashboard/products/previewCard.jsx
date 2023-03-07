@@ -1,21 +1,13 @@
 import {useEffect, useState} from 'react';
+import {getProduct} from '@/lib/dataFetchers';
 
 export default function Preview({id}) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     if (id) {
-      fetch(`https://fakestoreapi.com/products/${id}`)
-        .then(e => e.json())
-        .then(e => {
-          e.photo = e.image;
-          e.name = e.title;
-
-          delete e.image;
-          delete e.title;
-
-          setData(e);
-        });
+      getProduct(id)
+        .then(e => setData(e.data));
     } else {
       setTimeout(() => setData(null), 300);
     }

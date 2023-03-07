@@ -20,7 +20,7 @@ export default function Login() {
       });
 
       if (res.ok) {
-        //Router.push('/admin/productos');
+        Router.push('/admin/productos');
       }
       else
         alert('Contraseña equivocada');
@@ -31,7 +31,7 @@ export default function Login() {
   }
 
   return <div className='flex flex-grow w-full justify-center items-center'>
-    <form className='bg-white p-12 w-fit flex flex-col rounded-xl' onSubmit={login}>
+    <form className='bg-white p-12 w-fit flex flex-col rounded-xl w-full' onSubmit={login}>
       <Input placeholder='Contraseña' type='password' onChange={({target: {value}}) => setPassword(value)} value={password}/>
       <Button className='bg-red-500 text-white'>Iniciar Sesión</Button>
     </form>

@@ -56,10 +56,14 @@ function Products() {
             ? <li>
                 <span>Cargando</span>
               </li>
-            : products.map(e => <ProductCard key={e.id} onSelect={id => {
-              setProductPreview(id);
-              setIsProductPreviewOpen(true);
-            }} {...e}/>)
+            : products.map(e => <ProductCard
+                key={e.key}
+                onSelect={id => {
+                  setProductPreview(e.key);
+                  setIsProductPreviewOpen(true);
+                }}
+                {...e}
+              />)
         }
       </ul>
     </div>

@@ -32,6 +32,7 @@ export default function Modal({children, isOpen, onClose}) {
       items-center
       justify-center
       py-12
+      z-10
     '
     ref={modalRef}
   >

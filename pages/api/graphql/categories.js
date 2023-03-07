@@ -14,6 +14,6 @@ export default createYoga({
   graphqlEndpoint: '/api/graphql/categories',
   cors: {
     origin: process.env.NEXT_PUBLIC_VERCEL_URL,
-    methods: ['POST', 'GET']
+    methods: ['POST']
   }
 });

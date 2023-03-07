@@ -15,7 +15,7 @@ export default function Layout({children}) {
     }
   }, [status, data]);
 
-  return <div className='flex items-center'>
+  return <div className='flex h-full w-full absolute items-start'>
     <Nav/>
     <div className='flex-grow'>
       {children}

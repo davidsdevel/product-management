@@ -23,7 +23,7 @@ function Categories() {
     <div className='px-2 pt-4'>
       <ul className='flex flex-wrap items-start'>
         <li className='w-full md:w-1/2 md:px-2'>
-          <button className='w-full border-4 border-gray-300 h-24 md:h-32 rounded-xl flex items-center justify-center' onClick={() => setIsModalOpen(true)}>
+          <button className='w-full border-4 border-gray-300 h-24 md:h-44 rounded-xl flex items-center justify-center' onClick={() => setIsModalOpen(true)}>
             <FaPlus className='text-gray-400'/>
             <span className='ml-1 text-sm font-bold text-gray-500'>Añadir Categoria</span>
           </button>
