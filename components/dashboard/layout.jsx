@@ -9,7 +9,6 @@ export default function Layout({children}) {
   useEffect(() => {
     if (data) {
       const {user: {firebaseToken}} = data;
-      console.log(firebaseToken)
       
       firebaseLogin(firebaseToken);
     }
@@ -20,5 +19,5 @@ export default function Layout({children}) {
     <div className='flex-grow'>
       {children}
     </div>
-  </div>
+  </div>;
 }

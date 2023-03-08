@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef} from 'react'
+import {useState, useEffect, useRef} from 'react';
 
 const images = [
   {
@@ -9,7 +9,7 @@ const images = [
     text: '',
     image: '/images/ferreteria-cabecera-2.jpg'
   }
-]
+];
 
 export default function Header() {
   const [active, setActive] = useState(0);
@@ -25,5 +25,5 @@ export default function Header() {
         
       </div>)
     }
-  </header>
+  </header>;
 }

@@ -13,5 +13,5 @@ export default function CategoriesCard({image, name}) {
         </div>
       </div>
     </div>
-  </li>
+  </li>;
 }

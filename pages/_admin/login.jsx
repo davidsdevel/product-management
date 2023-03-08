@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo';
 import {useState} from 'react';
 import {signIn, getProviders, getCsrfToken} from 'next-auth/react';
 import Input from '@/components/input';
@@ -28,14 +29,17 @@ export default function Login() {
       throw err;
     }
 
-  }
+  };
 
-  return <div className='flex flex-grow w-full justify-center items-center'>
-    <form className='bg-white p-12 w-fit flex flex-col rounded-xl w-full' onSubmit={login}>
+  return <div className='flex flex-grow w-full justify-center items-center absolute h-full w-full bg-center bg-cover top-0' style={{backgroundImage: 'url(/images/ferreteria-banner.jpg)'}}>
+    <NextSeo
+      title='Administrador'
+    />
+    <form className='max-w-xs bg-white p-12 flex flex-col rounded-xl w-4/5' onSubmit={login}>
       <Input placeholder='Contraseña' type='password' onChange={({target: {value}}) => setPassword(value)} value={password}/>
       <Button className='bg-red-500 text-white'>Iniciar Sesión</Button>
     </form>
-    <style jsx global>{`
+    {/*<style jsx global>{`
       #__next {
         display: flex;
         flex-direction: column;
@@ -45,6 +49,6 @@ export default function Login() {
         background-position: center;
         background-size: cover;
       }
-    `}</style>
-  </div>
+    `}</style>*/}
+  </div>;
 }

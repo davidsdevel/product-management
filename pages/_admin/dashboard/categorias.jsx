@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo';
 import Modal from '@/components/modal';
 import {useState, useEffect} from 'react';
 import CategoryCard from '@/components/dashboard/categories/card';
@@ -20,6 +21,9 @@ function Categories() {
   }, []);
 
   return <Layout>
+    <NextSeo
+      title='Administrador'
+    />
     <div className='px-2 pt-4'>
       <ul className='flex flex-wrap items-start'>
         <li className='w-full md:w-1/2 md:px-2'>
@@ -41,7 +45,7 @@ function Categories() {
       <CategoryForm onAddCategory={category => {
         setCategories(prev => {
           return prev.concat(category);
-        })
+        });
       }}/>
     </Modal>
     <style jsx global>{`
@@ -49,7 +53,7 @@ function Categories() {
         background: #f3f4f6;
       }
     `}</style>
-  </Layout>
+  </Layout>;
 }
 
 Categories.isAdmin = true;

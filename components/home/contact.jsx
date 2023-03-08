@@ -1,4 +1,5 @@
-import {FaPhone} from 'react-icons/fa';
+import {FaPhone, FaDirections, FaRegClock} from 'react-icons/fa';
+import {HiMail} from 'react-icons/hi';
 
 export default function Contact() {
   return <div className='py-8 bg-slate-50'>
@@ -15,21 +16,21 @@ export default function Contact() {
         </li>
         <li className='flex flex-col w-full px-4 m-auto '>
           <h5 className='flex items-center my-4 text-xl font-bold'>
-            <FaPhone className='mr-2'/>
+            <HiMail className='mr-2'/>
             <span>Correo</span>
           </h5>
           <div className='w-full'>ferreteriaelgranyosoy@gmail.com</div>
         </li>
         <li className='flex flex-col w-full px-4 m-auto '>
           <h5 className='flex items-center my-4 text-xl font-bold'>
-            <FaPhone className='mr-2'/>
+            <FaDirections className='mr-2'/>
             <span>Dirección</span>
           </h5>
           <div className='w-full'>Av 93 (Negro Primero) #100-90, Parcela #9, Sector Parcelamiento, Flor Amarillo, Valencia Edo. Carabobo, Venezuela</div>
         </li>
         <li className='flex flex-col w-full px-4 m-auto '>
           <h5 className='flex items-center my-4 text-xl font-bold'>
-            <FaPhone className='mr-2'/>
+            <FaRegClock className='mr-2'/>
             <span>Horario</span>
           </h5>
           <ul className='w-full list-disc pl-4'>
@@ -40,5 +41,5 @@ export default function Contact() {
         </li>
       </ul>
     </div>
-  </div>
+  </div>;
 }

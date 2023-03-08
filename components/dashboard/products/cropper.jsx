@@ -47,7 +47,7 @@ export default function CropperModal({image, onDone}) {
       
       if (cropper.current)
         cropper.current.destroy();
-    }
+    };
   }, [image]);
 
   const cropDone = async () => {

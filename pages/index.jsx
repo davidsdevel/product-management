@@ -19,7 +19,7 @@ export async function getServerSideProps() {
       products,
       categories
     }
-  }
+  };
 }
 
 export default function Home({products, categories}) {
@@ -29,5 +29,5 @@ export default function Home({products, categories}) {
     <Products data={products}/>
     <Banner/>
     <Contact/>
-  </>
+  </>;
 }

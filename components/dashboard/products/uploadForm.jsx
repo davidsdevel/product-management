@@ -29,7 +29,7 @@ export default function UploadForm({isOpen, categories, onDone}) {
     input.id = 'upload-input';
 
     return input;
-  }
+  };
 
   const selectInput = handleImages => {
     let uploadInput = document.getElementById('upload-input');
@@ -42,16 +42,16 @@ export default function UploadForm({isOpen, categories, onDone}) {
     uploadInput.onchange = handleImages;
 
     uploadInput.click();
-  }
+  };
 
   const handleImages = ({target: {files: [file]}}) => {
     setImage(file);
     setShowModal(true);
-  }
+  };
 
   const addImage = () => {
     const input = selectInput(handleImages);
-  }
+  };
 
   const uploadProduct = async () => {
     const {key, ...product} = await createProduct({
@@ -72,7 +72,7 @@ export default function UploadForm({isOpen, categories, onDone}) {
       ...product,
       photo: photoName
     });
-  }
+  };
 
   useEffect(() => {
     window._cp = createProduct;
@@ -80,7 +80,7 @@ export default function UploadForm({isOpen, categories, onDone}) {
       setTimeout(() => {
         imageRef.current.style.backgroundImage = '';
         setHasImage(false);
-      }, 300)
+      }, 300);
     }
   }, [isOpen]);
 
@@ -128,5 +128,5 @@ export default function UploadForm({isOpen, categories, onDone}) {
         fileReader.readAsDataURL(blob);
       }}/>
     </Modal>
-  </div>
+  </div>;
 }

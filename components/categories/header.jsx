@@ -5,5 +5,5 @@ export default function Header({name, image}) {
         <h1 className='text-white text-2xl font-bold'>{name}</h1>
       </div>
     </div>
-  </header>
+  </header>;
 }

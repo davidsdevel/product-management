@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
 
-  return <nav className='flex justify-starts w-full bg-white p-4 relative shadow shadow-gray-500 md:items-center'>
+  return <nav className='z-10 flex justify-starts w-full bg-white p-4 relative shadow shadow-gray-500 md:items-center'>
     <button className='block md:hidden' onClick={() => setIsOpen(!isOpen)}>
       {
         isOpen
@@ -28,5 +28,5 @@ export default function Nav() {
         </Link>*/}
       </div>
     </div>
-  </nav>
+  </nav>;
 }

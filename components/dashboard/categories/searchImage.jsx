@@ -19,7 +19,7 @@ export default function ImageSearch({onSelectImage, isOpen}) {
 
       setData(images.results);
     }
-  }
+  };
 
   useEffect(() => {
     windowRef.current = window;
@@ -50,5 +50,5 @@ export default function ImageSearch({onSelectImage, isOpen}) {
         <Button className='bg-red-500 mt-4' onClick={() => onSelectImage(image)}>Seleccionar</Button>
       </div>
     </Modal>
-  </div>
+  </div>;
 }

@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo';
 import Card from '@/components/product/card';
 import Header from '@/components/categories/header';
 import Recommendation from '@/components/product/recommendation';
@@ -6,6 +7,22 @@ import {getProduct, getAllCategories, getAllProducts, getCategoryByName} from '@
 
 export default function Categories({product, recommended, categories, category}) {
   return <>
+    <NextSeo
+      title={product.name}
+      description={product.description}
+      openGraph={{
+        url: `https://url/productos/${product.key}`,
+        title: product.name,
+        description: product.description,
+        images: [
+          {
+            url: product.photo,
+            alt: product.name,
+            type: 'image/webp',
+          }
+        ],
+      }}
+    />
     <Header {...category}/>
     <div className='flex flex-row my-16'>
       <div className='w-full md:w-3/4'>
@@ -14,14 +31,14 @@ export default function Categories({product, recommended, categories, category})
       </div>
       <CategoriesList data={categories}/>
     </div>
-  </>
+  </>;
 }
 
 export async function getStaticPaths() {
   return {
     paths: [],
     fallback: true
-  }
+  };
 }
 
 export async function getStaticProps({params}) {
@@ -32,7 +49,7 @@ export async function getStaticProps({params}) {
   if (!product)
     return {
       notFound: true
-    }
+    };
 
   const [categoriesResponse, recommendedResponse, categoryResponse] = await Promise.all([
     getAllCategories({fields: ['name']}),
@@ -52,5 +69,5 @@ export async function getStaticProps({params}) {
       categories,
       category
     }
-  }
+  };
 }

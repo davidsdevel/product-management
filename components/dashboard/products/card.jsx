@@ -22,5 +22,5 @@ export default function ProductCard({id, photo, name, category, price, onSelect}
         </div>
       </div>
     </div>
-  </li>
+  </li>;
 }

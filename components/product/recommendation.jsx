@@ -8,5 +8,5 @@ export default function Recommendation({data}) {
         data.map((e, i) => <Card key={e.title + i} {...e}/>)
       }
     </ul>
-  </div>
+  </div>;
 }

@@ -1,5 +1,5 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
 import app from '@/lib/firebase/server';
 import {getAuth} from 'firebase-admin/auth';
@@ -67,13 +67,13 @@ export default NextAuth({
             return {
               firebaseToken,
               firebaseExp
-            }
+            };
           }
 
           // Return null if user data could not be retrieved
           return null;
         } catch(err) {
-          return null
+          return null;
         }
       }
     })

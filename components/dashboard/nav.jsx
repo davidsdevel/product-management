@@ -25,8 +25,6 @@ export default function DashboardNav() {
 
   const router = Router.useRouter();
 
-  console.log(router)
-
   useEffect(() => { 
     if (window.screen.width < 768) {
       if (isOpen) {
@@ -59,7 +57,7 @@ export default function DashboardNav() {
                 {icon}
                 <span className='text-xs font-bold'>{name}</span>
               </button>
-            </li>
+            </li>;
           })
         }
       </ul>
@@ -76,5 +74,5 @@ export default function DashboardNav() {
       <FaChevronRight/>
     </button>
     <div className='transition-all duration-300 ease hidden opacity-0 fixed top-0 left-0 bg-black h-full w-full' ref={shadowRef} onClick={() => setIsOpen(false)}/>
-  </>
+  </>;
 }

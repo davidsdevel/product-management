@@ -1,5 +1,5 @@
 export default function Select({options}) {
-  return <select className={`text-sm py-2 px-2 my-1 border border-gray-400 rounded-md`}>{
+  return <select className={'text-sm py-2 px-2 my-1 border border-gray-400 rounded-md'}>{
     options.map((e, i) => {
       let name = '';
       let value = '';
@@ -12,8 +12,8 @@ export default function Select({options}) {
         value = e.value;
       }
 
-      return <option className='text-sm' key={`${name}-${i}`} value={value}>{name}</option>
+      return <option className='text-sm' key={`${name}-${i}`} value={value}>{name}</option>;
 
     })
-  }</select>
+  }</select>;
 }

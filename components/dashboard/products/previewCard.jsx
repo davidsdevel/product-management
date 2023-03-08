@@ -16,7 +16,7 @@ export default function Preview({id}) {
   if (!data)
     return <div>
       <span>Cargando</span>
-    </div>
+    </div>;
 
   return <div className='px-2 text-center md:flex md:py-12'>
     <div className='px-4 md:w-1/2 md:flex md:items-center md:justify-center'>
@@ -32,5 +32,5 @@ export default function Preview({id}) {
         <span className='text-gray-500 text-xl font-bold'>{data.price}$</span>
       </div>
     </div>
-  </div>
+  </div>;
 }

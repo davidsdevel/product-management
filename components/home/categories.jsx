@@ -21,5 +21,5 @@ export default function Categories({categories}) {
         }
       </ul>
     </div>
-  </div>
+  </div>;
 }

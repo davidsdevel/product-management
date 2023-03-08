@@ -8,5 +8,5 @@ export default function ProductCard({name, id, photo}) {
       <span className='text-center my-4 grow'>{name}</span>
       <Button className='bg-slate-600 text-white' onClick={() => Router.push(`/productos/${id}`)}>Consultar</Button>
     </div>
-  </li>
+  </li>;
 }

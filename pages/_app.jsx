@@ -1,5 +1,5 @@
 import {useRouter} from 'next/router';
-import {SessionProvider} from "next-auth/react";
+import {SessionProvider} from 'next-auth/react';
 import {useState, useEffect} from 'react';
 import Footer from '@/components/footer';
 import Fallback from '@/components/fallback';
@@ -33,11 +33,11 @@ export default function App({
     return () => {
       router.events.off('routeChangeStart', handleRouteChange);
       router.events.off('routeChangeComplete', handleRouteChangeComplete);
-    }
+    };
   }, [router]);
 
   if (router.isFallback)
-    return <Fallback/>
+    return <Fallback/>;
 
   return <SessionProvider session={session}>
     <DefaultSeo
@@ -69,5 +69,5 @@ export default function App({
         <CgSpinner className='text-white text-2xl animate-spin'/>
       </div>
     }
-  </SessionProvider>
+  </SessionProvider>;
 }

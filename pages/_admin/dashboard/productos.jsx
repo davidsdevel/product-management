@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo';
 import {useState, useEffect} from 'react';
 import ProductCard from '@/components/dashboard/products/card';
 import {FaPlus} from 'react-icons/fa';
@@ -30,6 +31,9 @@ function Products() {
   }, []);
 
   return <Layout>
+    <NextSeo
+      title='Administrador'
+    />
     <Script src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js'/>
     <Head>
       <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css'/>
@@ -81,7 +85,7 @@ function Products() {
       />
     </Modal>
     <Modal isOpen={isProductPreviewOpen} onClose={() => {
-      setIsProductPreviewOpen(false)
+      setIsProductPreviewOpen(false);
       setProductPreview(null);
     }}>
       <PreviewCard id={productPreview}/>
@@ -91,7 +95,7 @@ function Products() {
         background: #f3f4f6;
       }
     `}</style>
-  </Layout>
+  </Layout>;
 }
 
 Products.isAdmin = true;

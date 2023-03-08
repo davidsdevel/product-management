@@ -7,10 +7,10 @@ export default function Categories({data}) {
       {
         data.map(({name, path}) => <li key={name} className='w-full'>
           <Link href={`/categorias/${path}`}>
-            <a className='w-11/12 bg-slate-100 block text-center margin-auto py-1 rounded-md'>{name}</a>
+            <a className='w-11/12 bg-slate-600 block text-white text-center margin-auto py-1 rounded-md'>{name}</a>
           </Link>
         </li>)
       }
     </ul>
-  </div>
+  </div>;
 }

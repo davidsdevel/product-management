@@ -20,7 +20,7 @@ export default function CategoryForm({isOpen, onAddCategory}) {
       setTimeout(() => {
         imageRef.current.style.backgroundImage = '';
         setHasImage(false);
-      }, 300)
+      }, 300);
     }
   }, [isOpen]);
 
@@ -62,5 +62,5 @@ export default function CategoryForm({isOpen, onAddCategory}) {
         isOpen={isOpenModal}
       />
     </Modal>
-  </div>
+  </div>;
 }

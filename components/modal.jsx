@@ -58,5 +58,5 @@ export default function Modal({children, isOpen, onClose}) {
     >
       {children}
     </div>
-  </div>
+  </div>;
 }

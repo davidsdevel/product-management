@@ -15,7 +15,7 @@ export default async function UnsplashAPI(req, res, query) {
     query: q,
     page: page ? +page : 1,
     perPage: limit ? +limit : 10,
-    lang: "es"
+    lang: 'es'
   });
 
   const {response} = photos;
@@ -27,7 +27,7 @@ export default async function UnsplashAPI(req, res, query) {
       raw: e.urls.raw,
       download: e.links.download_location
     };
-  })
+  });
 
   res.json(response);
 }
