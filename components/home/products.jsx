@@ -6,7 +6,7 @@ export default function Products({data}) {
     <h3 className='my-4 font-bold text-2xl text-center'>Ultimos productos</h3>
     <ul className='flex flex-wrap w-full justify-around max-w-7xl m-auto'>
       {
-        data.concat(data).map((e, i) => <Card key={e.name + i} id={e.key} {...e}/>)
+        data.map((e, i) => <Card key={e.name + i} id={e.key} {...e}/>)
       }
     </ul>
   </div>;
