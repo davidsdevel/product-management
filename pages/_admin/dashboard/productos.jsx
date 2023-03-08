@@ -57,8 +57,10 @@ function Products() {
         </li>
         {
           isLoading
-            ? <li>
-                <span>Cargando</span>
+            ? <li className='md:w-1/2 md:px-2 w-full'>
+              <div className='h-24 md:h-32 bg-gray-400 rounded-xl animate-pulse flex items-center justify-center'>
+                <span className='font-bold text-sm text-white'>Cargando</span>
+              </div>
               </li>
             : products.map(e => <ProductCard
                 key={e.key}
