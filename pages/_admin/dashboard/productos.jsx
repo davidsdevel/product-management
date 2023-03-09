@@ -104,7 +104,7 @@ function Products() {
           setProducts(updated);
           setIsAddProductOpen(false);
           setIsEditActive(false);
-          setEditData(null);
+          setTimeout(() => setEditData(null), 300);
         }}
         isEdit={isEditActive}
         editData={editData}

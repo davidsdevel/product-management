@@ -101,10 +101,15 @@ export default function UploadForm({isOpen, categories, onDone, onEditDone, edit
   };
 
   useEffect(() => {
-
     if (!isOpen) {
       setTimeout(() => {
         imageRef.current.style.backgroundImage = '';
+
+        setProductDescription('');
+        setProductCategory('');
+        setProductPrice('');
+        setProductName('');
+
         setHasImage(false);
       }, 300);
     }
