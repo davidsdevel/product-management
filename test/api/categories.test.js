@@ -4,6 +4,7 @@ import {categories, products} from '../../lib/deta/connection';
 import getFieldsFromData from '../getFieldsFromData';
 
 const idArray = [];
+const productsIdArray = [];
 let testingDataId = null;
 
 function createQuery(query) {
@@ -190,7 +191,7 @@ describe('Categories Testing', () => {
 
     
     idArray.push(key);
-    idArray.push(_product.key);
+    productsIdArray.push(_product.key);
 
     const response = await createQuery(`mutation {
       deleteCategory(key: "${key}")
@@ -230,4 +231,5 @@ describe('Categories Testing', () => {
 
 afterAll(async () => {
   await Promise.all(idArray.map(e => categories.delete(e)));
+  await Promise.all(productsIdArray.map(e => products.delete(e)));
 })

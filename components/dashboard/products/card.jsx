@@ -34,7 +34,11 @@ export default function ProductCard({id, photo, name, category, price, descripti
       </div>
       <div>
         <Button className='bg-red-500 text-white mr-4' onClick={async () => {
-          await deleteProduct(id);
+          const _key = await deleteProduct(id);
+
+          if (!_key)
+            return alert('Error al eliminar');
+
           setShowDeleteModal(false);
           onDelete(id);
         }}>Si</Button>
