@@ -144,7 +144,10 @@ export default function UploadForm({isOpen, categories, onDone, onEditDone, edit
       <Select
         onChange={({target: {value}}) => setProductCategory(value)}
         value={productCategory}
-        options={categories}
+        options={[
+          'Ninguna',
+          ...categories
+        ]}
       />
       <Input placeholder='Precio' type='number' onChange={({target: {value}}) => setProductPrice(value)} value={productPrice}/>
       <Button className='bg-red-500 text-white mt-8' onClick={isEdit ? updateProductData : uploadProduct}>{isEdit ? 'Actualizar' : 'Subir'} Producto</Button>
