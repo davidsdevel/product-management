@@ -15,6 +15,7 @@ export default async function UnsplashAPI(req, res, query) {
     query: q,
     page: page ? +page : 1,
     perPage: limit ? +limit : 10,
+    orientation: 'landscape',
     lang: 'es'
   });
 

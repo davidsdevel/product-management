@@ -19,6 +19,8 @@ export default function CategoryForm({isOpen, onAddCategory}) {
     if (!isOpen) {
       setTimeout(() => {
         imageRef.current.style.backgroundImage = '';
+        setName('');
+        setImage('');
         setHasImage(false);
       }, 300);
     }

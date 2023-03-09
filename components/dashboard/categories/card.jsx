@@ -7,7 +7,7 @@ import Button from '@/components/button';
 export default function CategoriesCard({id, image, name, onDelete}) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  return <li className='w-full md:w-1/2'>
+  return <li className='w-full md:w-1/2 md:px-2 my-2'>
     <div className='flex flex-col items-center border rounded-lg overflow-hidden border-gray-400 h-44 bg-white'>
       <div style={{backgroundImage: `url(${image}&w=500&q=75)`}} className='w-full h-28 bg-center bg-cover'/>
       <div className='w-full'>

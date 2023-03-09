@@ -26,7 +26,7 @@ function Categories() {
     />
     <div className='px-2 pt-4'>
       <ul className='flex flex-wrap items-start'>
-        <li className='w-full md:w-1/2 md:px-2'>
+        <li className='w-full md:w-1/2 my-2 md:px-2'>
           <button className='w-full border-4 border-gray-300 h-24 md:h-44 rounded-xl flex items-center justify-center' onClick={() => setIsModalOpen(true)}>
             <FaPlus className='text-gray-400'/>
             <span className='ml-1 text-sm font-bold text-gray-500'>Añadir Categoria</span>
@@ -34,8 +34,10 @@ function Categories() {
         </li>
         {
           isLoading
-            ? <li>
-                <span>Cargando</span>
+            ? <li className='md:w-1/2 md:px-2 my-2 w-full'>
+                <div className='h-24 md:h-44 bg-gray-400 rounded-xl animate-pulse flex items-center justify-center'>
+                  <span className='font-bold text-sm text-white'>Cargando</span>
+                </div>
               </li>
             : categories.map(e => <CategoryCard
                 key={e.key}
@@ -51,6 +53,8 @@ function Categories() {
         setCategories(prev => {
           return prev.concat(category);
         });
+
+        setIsModalOpen(false);
       }}/>
     </Modal>
     <style jsx global>{`

@@ -10,7 +10,9 @@ export default function ImageSearch({onSelectImage, isOpen}) {
 
   const windowRef = useRef(null);
 
-  const findImages = async () => {
+  const findImages = async e => {
+    e.preventDefault();
+
     const fetchResponse = await fetch(`/api/unsplash?q=${query}`);
 
     if (fetchResponse.ok) {
@@ -32,10 +34,10 @@ export default function ImageSearch({onSelectImage, isOpen}) {
   }, [isOpen]);
   return <div>
     <div className='flex flex-col items-center'>
-      <div>
+      <form onSubmit={findImages}>
         <Input onChange={({target: {value}}) => setQuery(value)} value={query} placeholder='Nombre de la imagen'/>
-        <Button className='bg-red-500' onClick={findImages}>Buscar</Button>
-      </div>
+        <Button className='bg-red-500 text-white'>Buscar</Button>
+      </form>
       <ul className='flex flex-wrap w-84 justify-between'>
         {
           data.map((e, i) => <li key={e.raw} className='my-1' onClick={() => setImage(e.raw)}>
