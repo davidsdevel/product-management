@@ -1,6 +1,12 @@
+import {useState} from 'react';
 import {FaTrashAlt} from 'react-icons/fa';
+import {deleteCategory} from '@/lib/dataFetchers';
+import Modal from '@/components/modal';
+import Button from '@/components/button';
 
-export default function CategoriesCard({image, name}) {
+export default function CategoriesCard({id, image, name, onDelete}) {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   return <li className='w-full md:w-1/2'>
     <div className='flex flex-col items-center border rounded-lg overflow-hidden border-gray-400 h-44 bg-white'>
       <div style={{backgroundImage: `url(${image}&w=500&q=75)`}} className='w-full h-28 bg-center bg-cover'/>
@@ -8,10 +14,25 @@ export default function CategoriesCard({image, name}) {
         <div className='text-center'>
           <span className='text-lg font-bold text-gray-500'>{name}</span>
         </div>
-        <div className='flex flex-col items-end w-full px-2 pb-2'>
-          <FaTrashAlt className='text-lg'/>
-        </div>
+        <button className='flex flex-col items-end w-full px-4' onClick={() => setShowDeleteModal(true)}>
+          <FaTrashAlt className='text-lg text-red-600'/>
+        </button>
       </div>
     </div>
+    <Modal isOpen={showDeleteModal} onClose={() => setShowDeleteModal(false)}>
+      <div className='mb-4'>
+        <span className='text-lg font-bold'>¿Estas seguro de eliminar el producto?</span>
+      </div>
+      <div>
+        <Button className='bg-red-500 text-white mr-4' onClick={async () => {
+          await deleteCategory(id);
+          setShowDeleteModal(false);
+          onDelete(id);
+        }}>Si</Button>
+        <Button className='bg-slate-400 text-white mr-4' onClick={() => {
+          setShowDeleteModal(false);
+        }}>No</Button>
+      </div>
+    </Modal>
   </li>;
 }

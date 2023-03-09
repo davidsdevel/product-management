@@ -37,7 +37,12 @@ function Categories() {
             ? <li>
                 <span>Cargando</span>
               </li>
-            : categories.map(e => <CategoryCard key={e.key} {...e}/>)
+            : categories.map(e => <CategoryCard
+                key={e.key}
+                id={e.key}
+                onDelete={id => setCategories(prev => prev.filter(item => item.key !== id))}
+                {...e}
+              />)
         }
       </ul>
     </div>
