@@ -1,6 +1,6 @@
 import request from 'supertest';
 import gql from '../../pages/api/graphql/categories';
-import {categories} from '../../lib/deta/connection';
+import {categories, products} from '../../lib/deta/connection';
 import getFieldsFromData from '../getFieldsFromData';
 
 const idArray = [];
@@ -180,14 +180,25 @@ describe('Categories Testing', () => {
       name: 'Delete test name',
       image: 'Delete test image'
     });
+
+    const _product = await products.put({
+      name: 'Name',
+      description: 'Description',
+      price: 12,
+      category: 'Delete test name',
+    });
+
     
     idArray.push(key);
+    idArray.push(_product.key);
 
     const response = await createQuery(`mutation {
       deleteCategory(key: "${key}")
     }`);
 
     const data = await categories.fetch();
+
+    const _updatedProduct = await products.get(_product.key);
     
     const {data: {deleteCategory}} = response.body;
     
@@ -212,6 +223,8 @@ describe('Categories Testing', () => {
     expect(keys).not
       .toContain(key);
 
+    expect(_updatedProduct.category)
+      .toBe('Ninguna');
   });
 });
 

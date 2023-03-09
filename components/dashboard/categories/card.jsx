@@ -26,6 +26,7 @@ export default function CategoriesCard({id, image, name, onDelete}) {
       <div>
         <Button className='bg-red-500 text-white mr-4' onClick={async () => {
           await deleteCategory(id);
+
           setShowDeleteModal(false);
           onDelete(id);
         }}>Si</Button>

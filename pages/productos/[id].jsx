@@ -23,7 +23,7 @@ export default function Categories({product, recommended, categories, category})
         ],
       }}
     />
-    <Header {...category}/>
+    <Header {...(category ? category : {})}/>
     <div className='flex flex-row my-16'>
       <div className='w-full md:w-3/4'>
         <Card data={product}/>
@@ -51,23 +51,25 @@ export async function getStaticProps({params}) {
       notFound: true
     };
 
-  const [categoriesResponse, recommendedResponse, categoryResponse] = await Promise.all([
+  const promises =  [
     getAllCategories({fields: ['name']}),
+    getAllProducts({limit: 4}) //TODO: Change recommended searchMethod
+  ];
 
-    getAllProducts({limit: 4}), //TODO: Change recommended searchMethod
-    getCategoryByName(product.category)
-  ]);
+  if (product.category !== 'Ninguna') 
+    promises.push(getCategoryByName(product.category));
+
+  const [categoriesResponse, recommendedResponse, categoryResponse] = await Promise.all();
 
   const {data: categories} = categoriesResponse;
   const {data: recommended} = recommendedResponse;
-  const {data: category} = categoryResponse;
-  
+
   return {
     props: {
       product,
       recommended,
       categories,
-      category
+      category: categoryResponse?.data
     }
   };
 }
