@@ -11,12 +11,15 @@ import Head from 'next/head';
 import Layout from '@/components/dashboard/layout';
 
 function Products() {
-  const [isAddProductOpen, setIsAddProductOpen] = useState(false);
   const [isProductPreviewOpen, setIsProductPreviewOpen] = useState(false);
+  const [isAddProductOpen, setIsAddProductOpen] = useState(false);
   const [productPreview, setProductPreview] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+
+  const [isEditActive, setIsEditActive] = useState(false);
+  const [editData, setEditData] = useState(null);
 
   useEffect(() => {
     Promise.all([
@@ -64,26 +67,47 @@ function Products() {
               </li>
             : products.map(e => <ProductCard
                 key={e.key}
-                onSelect={id => {
+                id={e.key}
+                onSelect={() => {
                   setProductPreview(e.key);
                   setIsProductPreviewOpen(true);
                 }}
+                onEdit={data => {
+                  setEditData(data);
+                  setIsEditActive(true);
+                  setIsAddProductOpen(true);
+                }}
+                onDelete={key => setProducts(prev => prev.filter(e => e.key !== key))}
                 {...e}
               />)
         }
       </ul>
     </div>
-    <Modal isOpen={isAddProductOpen} onClose={() => setIsAddProductOpen(false)}>
+    <Modal isOpen={isAddProductOpen} onClose={() => {
+      setIsAddProductOpen(false);
+      setIsEditActive(false);
+      setEditData(null);
+    }}>
       <UploadForm
         isOpen={isAddProductOpen}
         categories={categories}
         onDone={product => {
-          setProducts(prev => {
-            return prev.concat([product]);
-          });
+          setProducts(prev => prev.concat([product]));
 
           setIsAddProductOpen(false);
+          setIsEditActive(false);
+          setEditData(null);
         }}
+        onEditDone={data => {
+          const updated = products.map(e => e.key === data.key ? data : e);
+
+          setProducts(updated);
+          setIsAddProductOpen(false);
+          setIsEditActive(false);
+          setEditData(null);
+        }}
+        isEdit={isEditActive}
+        editData={editData}
       />
     </Modal>
     <Modal isOpen={isProductPreviewOpen} onClose={() => {

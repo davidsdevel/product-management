@@ -32,7 +32,7 @@ export default NextAuth({
       if (token.user) {
         // Renew Firebase token on expiration 
         if(Date.now() > token.user.firebaseExp) {
-          token.user.firebaseToken = await auth.createCustomToken({admin: true});
+          token.user.firebaseToken = await auth.createCustomToken('admin');
           token.user.firebaseExp = Date.now() + (60*60*1000);
         }
 
