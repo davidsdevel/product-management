@@ -5,10 +5,11 @@ import {FaPlus} from 'react-icons/fa';
 import Modal from '@/components/modal';
 import UploadForm from '@/components/dashboard/products/uploadForm';
 import PreviewCard from '@/components/dashboard/products/previewCard';
-import {getAllProducts, getAllCategories} from '@/lib/dataFetchers';
+import {getAllProducts, getAllCategories, getProductsByCategory} from '@/lib/dataFetchers';
 import Script from 'next/script';
 import Head from 'next/head';
 import Layout from '@/components/dashboard/layout';
+import Select from '@/components/select';
 
 function Products() {
   const [isProductPreviewOpen, setIsProductPreviewOpen] = useState(false);
@@ -42,6 +43,30 @@ function Products() {
       <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css'/>
     </Head>
     <div className='px-2 pt-4'>
+      <div className='w-full max-w-6xl m-auto md:px-2 mb-4'>
+        <div className='flex flex-col w-fit'>
+          <span className='text-sm'>Categorias</span>
+          <Select
+            options={[
+              'Todas',
+              ...categories
+            ]}
+            onChange={async category => {
+              setIsLoading(true);
+              let productResponse = null;
+
+              if (category === 'Todas') {
+                productResponse = await getAllProducts();
+              } else {
+                productResponse = await getProductsByCategory(category);
+              }
+
+              setIsLoading(false);
+              setProducts(productResponse.data);
+            }}
+          />
+        </div>  
+      </div>
       <ul className='flex flex-wrap items-start max-w-6xl m-auto'>
         <li className='md:w-1/2 md:px-2 w-full'>
           <button
