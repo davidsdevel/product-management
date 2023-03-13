@@ -20,7 +20,7 @@ beforeAll(async () => {
   const {key} = await categories.put({
     name: 'Category Name',
     image: 'Image URL'
-  });
+  }, 'Category Name');
 
   idArray.push(key);
 
@@ -63,7 +63,7 @@ describe('Categories Testing', () => {
 
   test('Get Single Category', async () => {
     const response = await createQuery(`query {
-      category(key: "${testingDataId}") {
+      category(key: "Category Name") {
         key,
         name,
         image
@@ -87,38 +87,13 @@ describe('Categories Testing', () => {
     });
   });
 
-  test('Get Category By Name', async () => {
-    const response = await createQuery(`query {
-      categoryByName(name: "Category Name") {
-        key,
-        name,
-        image
-      }
-    }`);
-
-    const {data} = response.body;
-
-    expect(response.headers["content-type"])
-      .toMatch(/json/);
-    
-    expect(response.status)
-      .toEqual(200);
-    
-    expect(data).toEqual({
-      categoryByName: {
-        key: testingDataId,
-        name: 'Category Name',
-        image: 'Image URL'
-      }
-    });
-  });
-
   test('Create Category', async () => {
     const response = await createQuery(`mutation {
       createCategory(name: "Testing Name", image: "Testing Image") {
         key,
         name,
-        image
+        image,
+        products
       }
     }`);
 
@@ -135,15 +110,17 @@ describe('Categories Testing', () => {
       .toEqual(200);
 
     expect(createCategory).toEqual({
-      key: createCategory.key,
+      key: 'Testing Name',
       name: 'Testing Name',
-      image: 'Testing Image'
+      image: 'Testing Image',
+      products: 0
     });
 
     expect(data).toEqual({
-      key: createCategory.key,
+      key: 'Testing Name',
       name: 'Testing Name',
-      image: 'Testing Image'
+      image: 'Testing Image',
+      products: 0
     });
   });
 
@@ -151,7 +128,7 @@ describe('Categories Testing', () => {
     const {key} = await categories.put({
       name: 'Update test name',
       image: 'Update test image'
-    });
+    }, 'Update test name');
 
     idArray.push(key);
 
@@ -159,7 +136,7 @@ describe('Categories Testing', () => {
       updateCategory(key: "${key}", name: "Mod Name", image: "Mod Image")
     }`);
 
-    const data = await categories.get(key);
+    const data = await categories.get('Update test name');
     
     const {data: {updateCategory}} = response.body;
 
@@ -170,7 +147,7 @@ describe('Categories Testing', () => {
       .toBe(key);
     
     expect(data).toEqual({
-      key,
+      key: 'Update test name',
       name: 'Mod Name',
       image: 'Mod Image'
     });
@@ -180,7 +157,7 @@ describe('Categories Testing', () => {
     const {key} = await categories.put({
       name: 'Delete test name',
       image: 'Delete test image'
-    });
+    }, 'Delete test name');
 
     const _product = await products.put({
       name: 'Name',
@@ -194,7 +171,7 @@ describe('Categories Testing', () => {
     productsIdArray.push(_product.key);
 
     const response = await createQuery(`mutation {
-      deleteCategory(key: "${key}")
+      deleteCategory(key: "Delete test name")
     }`);
 
     const data = await categories.fetch();

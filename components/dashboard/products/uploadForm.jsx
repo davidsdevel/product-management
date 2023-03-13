@@ -96,6 +96,7 @@ export default function UploadForm({isOpen, categories, onDone, onEditDone, edit
 
     onDone({
       ...product,
+      key,
       photo: photoName
     });
   };
@@ -147,7 +148,7 @@ export default function UploadForm({isOpen, categories, onDone, onEditDone, edit
       <Input placeholder='Nombre del producto' onChange={({target: {value}}) => setProductName(value)} value={productName}/>
       <Input placeholder='Descripción del producto' onChange={({target: {value}}) => setProductDescription(value)} value={productDescription}/>
       <Select
-        onChange={({target: {value}}) => setProductCategory(value)}
+        onChange={value => setProductCategory(value)}
         value={productCategory}
         options={[
           'Ninguna',

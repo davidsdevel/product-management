@@ -1,4 +1,4 @@
-import { NextSeo } from 'next-seo';
+import {NextSeo} from 'next-seo';
 import Card from '@/components/product/card';
 import Header from '@/components/categories/header';
 import Recommendation from '@/components/product/recommendation';
@@ -59,7 +59,7 @@ export async function getStaticProps({params}) {
   if (product.category !== 'Ninguna') 
     promises.push(getCategoryByName(product.category));
 
-  const [categoriesResponse, recommendedResponse, categoryResponse] = await Promise.all();
+  const [categoriesResponse, recommendedResponse, categoryResponse] = await Promise.all(promises);
 
   const {data: categories} = categoriesResponse;
   const {data: recommended} = recommendedResponse;

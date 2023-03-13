@@ -1,9 +1,10 @@
 import request from 'supertest';
 import gql from '../../pages/api/graphql/products';
-import {products} from '../../lib/deta/connection';
+import {products, categories, metadata} from '../../lib/deta/connection';
 import getFieldsFromData from '../getFieldsFromData';
 
 const idArray = [];
+const categoriesArray = [];
 let testingDataId = null;
 
 function createQuery(query) {
@@ -173,10 +174,20 @@ describe('Products Testing', () => {
     const testData = {
       name: 'Create Name',
       description: 'Create Description',
-      category: 'Create Category',
+      category: 'Test Create Category',
       photo: 'Create Photo',
       price: 1998
     };
+
+    await categories.put({
+      name: 'Test Create Category',
+      image: 'Image URL',
+      products: 0
+    }, 'Test Create Category');
+
+    const {products: prevCount} = await metadata.get('ferre');
+
+    categoriesArray.push('Test Create Category');
 
     const response = await createQuery(`mutation {
       createProduct(
@@ -197,12 +208,18 @@ describe('Products Testing', () => {
 
     const {data: {createProduct}} = response.body;
     const data = await products.get(createProduct.key);
+    const _category = await categories.get('Test Create Category');
+    const {products: count} = await metadata.get('ferre');
+
+    //Restore prev state
+    await metadata.update({products: metadata.util.increment(-1)}, 'ferre');
     
     idArray.push(createProduct.key);
 
     expect(response.headers["content-type"])
       .toMatch(/json/);
-      expect(response.status)
+
+    expect(response.status)
       .toEqual(200);
 
     expect(createProduct).toEqual({
@@ -214,6 +231,12 @@ describe('Products Testing', () => {
       key: createProduct.key,
       ...testData
     });
+
+    expect(_category.products)
+      .toBe(1);
+
+    expect(count)
+      .toBe(prevCount + 1);
   });
 
 
@@ -259,28 +282,49 @@ describe('Products Testing', () => {
   });
 
   test('Delete Products', async () => {
-    const {key} = await products.put({
-      name: 'Delete Name',
-      description: 'Delete Description',
-      category: 'Delete Category',
-      photo: 'Delete Photo',
-      price: 1990
-    });
+    const [createProductRes] = await Promise.all([
+      products.put({
+        name: 'Delete Name',
+        description: 'Delete Description',
+        category: 'Delete Category',
+        photo: 'Delete Photo',
+        price: 1990
+      }),
+      categories.put({
+        name: 'Delete Category',
+        image: 'image url',
+        products: 1
+      }, 'Delete Category')
+    ]);
+
+    const {key} = createProductRes;
+
+    const {products: prevCount} = await metadata.get('ferre');
+    await metadata.update({products:  prevCount + 1}, 'ferre');
+
+    categoriesArray.push('Delete Category');
 
     const response = await createQuery(`mutation {
       deleteProduct(key: "${key}")
     }`);
 
     const {data: {deleteProduct}} = response.body;
-    const data = await products.fetch();
-    
+
+    const [data, _category, meta] = await Promise.all([
+      products.fetch(),
+      categories.get('Delete Category'),
+      metadata.get('ferre')
+    ]);
+
+    const {products: count} = meta;
+
     idArray.push(key);
 
     const {
       key: keys,
       name: names,
       description: descriptions,
-      category: categories,
+      category: _categories,
       photo: photos,
       price: prices
     } = getFieldsFromData(data.items)
@@ -297,7 +341,7 @@ describe('Products Testing', () => {
     expect(descriptions).not
       .toContain('Delete Description');
 
-    expect(categories).not
+    expect(_categories).not
       .toContain('Delete Category');
 
     expect(photos).not
@@ -309,9 +353,22 @@ describe('Products Testing', () => {
     expect(keys).not
       .toContain(key);
 
+    expect(_category.products)
+      .toBe(0);
+
+    expect(prevCount)
+      .toBe(count);
+
   });
 });
 
 afterAll(async () => {
+  //const _p = await products.fetch();
+  //const _c = await categories.fetch();
+
+  //await Promise.all(_p.items.map(e => products.delete(e.key)));
+  //await Promise.all(_c.items.map(e => categories.delete(e.key)));
+
   await Promise.all(idArray.map(e => products.delete(e)));
+  await Promise.all(categoriesArray.map(e => categories.delete(e)));
 });

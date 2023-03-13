@@ -10,24 +10,25 @@ export async function getServerSideProps({req, res}) {
   ]);
 
   const {data: categories} = categoriesResponse;
-  const {data: products} = productsResponse;
+  const {data: products, paging} = productsResponse;
 
   return {
     props: {
       products,
-      categories
+      categories,
+      paging
     }
   };
 }
 
-export default function Home({products, categories}) {
+export default function Home({products, categories, paging}) {
   return <>
     <NextSeo
       title='Productos'
     />
     <div className='flex flex-row'>
       <div className='w-3/4'>
-        <Products data={products}/>
+        <Products data={products} paging={paging}/>
       </div>
       <CategoriesList data={categories}/>
     </div>
