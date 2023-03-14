@@ -1,11 +1,12 @@
+import {useState, useEffect} from 'react';
+import {DefaultSeo} from 'next-seo';
 import {useRouter} from 'next/router';
 import {SessionProvider} from 'next-auth/react';
-import {useState, useEffect} from 'react';
+import {CgSpinner} from 'react-icons/cg';
+import {UserProvider} from '@/components/userContext';
 import Footer from '@/components/footer';
 import Fallback from '@/components/fallback';
 import Nav from '@/components/nav';
-import {CgSpinner} from 'react-icons/cg';
-import { DefaultSeo } from 'next-seo';
 
 //Load Globaly Firebase Service
 import '@/lib/firebase/client';
@@ -59,7 +60,9 @@ export default function App({
       noAdmin &&
       <Nav/>
     }
-    <Component {...pageProps} />
+    <UserProvider>
+      <Component {...pageProps} />
+    </UserProvider>
     {
       noAdmin &&
       <Footer/>

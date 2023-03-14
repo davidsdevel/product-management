@@ -1,67 +1,40 @@
 
-categories
+#Social Media promotion
 
-{
-  name: String Unique NotNull
-  url: String Unique NotNull
-  image: String
-}
+List social media posts
+Schedule social media post (qstash)
+List scheduled posts
+Count scheduled posts per network
+Calendar per week and month
 
-Products
 
+#Social messaging
+Instagram messages
+Facebook Messages
+Twitter Messages
+
+#User management
+
+When a client send a message or ask about a product, this will be registered into Database as customer.
+
+Create the customer and store ID into a cookie
+
+That data will be used in future asks about products. Data will be used only by Admin and same user
+App will generate a short-time access token (5 minutes) to request the info about client.
+Data will be retrieve if token is validate
+Data will be store in Customer context
+
+Add on metadata total users
+
+Schema
 {
   name: String
-  description: String
-  category: String
-  photo: String
-  price: String
+  email: String
+  phone: String
+  firstTime: Boolean
 }
 
-API
-
-GET queries limits, fields
-
-GET /categories
-return {
-  data: [
-    {
-      name: String
-      url: String,
-      image: String
-    }
-  ]  
-}
-
-GET /category/:name
-PATCH /category/:name
-DELETE /category/:name
-
-GET /products
-POST /products
-GET /product/:id
-PATCH /product/:id
-DELETE /product/:id
 
 
-URL: 
-/productos | Productos generales
-/productos/:id | producto sencillo
-/categoria/:id | categoria
 
-
-Dashboard
-  tabs:
-    categorias
-    productos
-
-Home
-  Slider
-  Categorias
-  Productos - Ultimos
-  Visitanos - Mapa
-  Contactos
-    Telefonos
-    Correo
-    Direccion
-    Horario
-  footer
+https://api.callmebot.com/whatsapp.php?phone=584144979409&text=El%20cliente%20%2ANombre%2A%20esta%20solicitando%20precios%20de%3A%20%2AProducto%2A%0A%0AResponder%20a%3A%20%2ANumber%2A&apikey=4803286
