@@ -4,7 +4,7 @@ categories
 {
   name: String Unique NotNull
   url: String Unique NotNull
-  icon: String
+  image: String
 }
 
 Products
@@ -13,10 +13,34 @@ Products
   name: String
   description: String
   category: String
-  url: String
   photo: String
   price: String
 }
+
+API
+
+GET queries limits, fields
+
+GET /categories
+return {
+  data: [
+    {
+      name: String
+      url: String,
+      image: String
+    }
+  ]  
+}
+
+GET /category/:name
+PATCH /category/:name
+DELETE /category/:name
+
+GET /products
+POST /products
+GET /product/:id
+PATCH /product/:id
+DELETE /product/:id
 
 
 URL: 
@@ -24,12 +48,11 @@ URL:
 /productos/:id | producto sencillo
 /categoria/:id | categoria
 
+
 Dashboard
   tabs:
     categorias
     productos
-
-
 
 Home
   Slider

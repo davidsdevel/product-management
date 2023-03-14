@@ -1,19 +1,38 @@
-import Link from 'next/link';
 
-export default function Products({data}) {
-  console.log(data[0])
-  return <div>
+import {useState} from 'react';
+import Button from '@/components/button';
+import Link from 'next/link';
+import Card from './productCard';
+import {getAllProducts} from '@/lib/dataFetchers';
+
+export default function Products({data, paging}) {
+  const [products,setProducts] = useState(data);
+  const [next, setNext] = useState(paging?.next);
+  const [isLoading, setIsLoading] = useState(false);
+
+  return <div className='py-12'>
     <h3 className='my-4 font-bold text-2xl text-center'>Ultimos productos</h3>
-    <ul className='flex flex-wrap w-full justify-around'>
-      {data .map(e => <li key={e.title + e.id} className='w-1/2 my-4'>
-        <div className='bg-slate-100 w-11/12 m-auto px-3 py-6 flex flex-col items-center'>
-          <img src={e.image}/>
-          <span className='text-center my-4'>{e.title}</span>
-          <Link href={`/productos/${e.id}`}>
-            <a className='font-bold'>Consultar</a>
-          </Link>
-        </div>
-      </li>)}
+    <ul className='flex flex-wrap w-full justify-around max-w-7xl m-auto'>
+      {
+        products.map((e, i) => <Card key={e.name + i} id={e.key} {...e}/>)
+      }
     </ul>
-  </div>
+    {
+      next &&
+      <div className='flex justify-center'>
+        <Button
+          className='bg-slate-500 text-white'
+          isLoading={isLoading}
+          onClick={async () => {
+            setIsLoading(true);
+            const response = await getAllProducts({last: paging.next});
+            
+            setIsLoading(false);
+            setProducts(prev => prev.concat(response.data));
+            setNext(response.paging.next);
+          }}
+        >Ver más</Button>
+      </div>
+    }
+  </div>;
 }

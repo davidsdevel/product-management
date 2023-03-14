@@ -3,24 +3,31 @@ import Categories from '@/components/home/categories';
 import Products from '@/components/home/products';
 import Banner from '@/components/home/banner';
 import Contact from '@/components/home/contact';
+import {getAllProducts, getAllCategories} from '@/lib/dataFetchers';
 
-export async function getServerSideProps({req, res}) {
-  const products = await fetch('https://fakestoreapi.com/products')
-    .then(e => e.json());
+export async function getServerSideProps() {
+  const [categoriesResponse, productsResponse] = await Promise.all([
+    getAllCategories(),
+    getAllProducts()
+  ]);
+
+  const {data: categories} = categoriesResponse;
+  const {data: products} = productsResponse;
 
   return {
     props: {
-      products
+      products,
+      categories
     }
-  }
+  };
 }
 
-export default function Home({products}) {
+export default function Home({products, categories}) {
   return <>
     <Header/>
-    <Categories/>
+    <Categories categories={categories}/>
     <Products data={products}/>
     <Banner/>
     <Contact/>
-  </>
+  </>;
 }
