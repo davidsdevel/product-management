@@ -4,15 +4,18 @@ import Input from '@/components/input';
 import Button from '@/components/button';
 
 export default function ImageSearch({onSelectImage, isOpen}) {
+  const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
   const [image, setImage] = useState('');
   const [data, setData] = useState([]);
 
-  const pageRef = useRef(1);
   const windowRef = useRef(null);
+  const pageRef = useRef(1);
 
   const findImages = async e => {
     e.preventDefault();
+
+    setIsLoading(true);
 
     const fetchResponse = await fetch(`/api/unsplash?q=${query}&page=${pageRef.current}`);
 
@@ -20,8 +23,8 @@ export default function ImageSearch({onSelectImage, isOpen}) {
 
       const images = await fetchResponse.json();
 
+      setIsLoading(false);
       setData(prev => {        
-
         if (pageRef.current === 1) {
           pageRef.current = pageRef.current + 1;
           
@@ -50,9 +53,9 @@ export default function ImageSearch({onSelectImage, isOpen}) {
   }, [isOpen]);
   return <div>
     <div className='flex flex-col items-center max-w-xl'>
-      <form onSubmit={findImages}>
+      <form onSubmit={findImages} className='flex items-center'>
         <Input onChange={({target: {value}}) => setQuery(value)} value={query} placeholder='Nombre de la imagen'/>
-        <Button className='bg-red-500 text-white'>Buscar</Button>
+        <Button className='bg-red-500 text-white ml-4' isLoading={isLoading && pageRef.current === 1}>Buscar</Button>
       </form>
       <ul className='flex flex-wrap w-84 justify-between'>
         {
@@ -63,7 +66,7 @@ export default function ImageSearch({onSelectImage, isOpen}) {
       </ul>
       {
         data.length > 0 &&
-        <Button className='bg-red-500 text-white mt-4' onClick={findImages}>Cargar Más</Button>
+        <Button className='bg-red-500 text-white mt-4' onClick={findImages} isLoading={isLoading && pageRef.current > 1}>Cargar Más</Button>
       }
     </div>
     <Modal isOpen={!!image} onClose={() => setImage('')}>

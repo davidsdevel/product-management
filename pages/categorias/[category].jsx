@@ -16,20 +16,21 @@ export async function getServerSideProps({query}) {
   ]);
 
   const {data: categories} = categoriesResponse;
-  const {data: products} = productsResponse;
+  const {data: products, paging} = productsResponse;
   const {data: categoryData} = categoryResponse;
   
   return {
     props: {
       products,
       categories,
-      category: categoryData
+      category: categoryData,
+      paging
     }
   };
 }
 
 
-export default function Home({products, categories, categoryPhoto, category}) {
+export default function Home({products, categories, categoryPhoto, category, paging}) {
   return <>
     <NextSeo
       title={category.name}
@@ -37,7 +38,7 @@ export default function Home({products, categories, categoryPhoto, category}) {
     <Header {...category}/>
     <div className='flex flex-row'>
       <div className='w-3/4'>
-        <Products data={products}/>
+        <Products data={products} paging={paging}/>
       </div>
       <CategoriesList data={categories}/>
     </div>

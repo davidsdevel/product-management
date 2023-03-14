@@ -9,10 +9,11 @@ import {createCategory} from '@/lib/dataFetchers';
 import sanitize from '@/lib/sanitizeCategoryName';
 
 export default function CategoryForm({isOpen, onAddCategory}) {
-  const [hasImage, setHasImage] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [name, setName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasImage, setHasImage] = useState(false);
   const [image, setImage] = useState('');
+  const [name, setName] = useState('');
   const imageRef = useRef(null);
 
   useEffect(() => {
@@ -44,13 +45,21 @@ export default function CategoryForm({isOpen, onAddCategory}) {
     </div>
     <div className='flex flex-col mt-8'>
       <Input placeholder='Nombre de la categoria' onChange={({target: {value}}) => setName(value)} value={name}/>
-      <Button className='bg-red-500 text-white mt-8' disabled={!image || !name} onClick={async () => {
-        const normalizedName = sanitize(name);
+      <Button
+        className='bg-red-500 text-white mt-8'
+        isLoading={isLoading}
+        disabled={!image || !name}
+        onClick={async () => {
+          const normalizedName = sanitize(name);
 
-        const newCategory = await createCategory({name: normalizedName, image});
+          setIsLoading(true);
 
-        onAddCategory(newCategory);
-      }}>Crear Categoria</Button>
+          const newCategory = await createCategory({name: normalizedName, image});
+
+          setIsLoading(true);
+          onAddCategory(newCategory);
+        }}
+      >Crear Categoria</Button>
     </div>
     <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
       <SearchImage

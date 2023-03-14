@@ -7,6 +7,7 @@ import Router from 'next/router';
 
 export default function Login() {
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const login = async e => {
     e.preventDefault();
@@ -15,10 +16,14 @@ export default function Login() {
       return alert('Ingrese la contraseña');
 
     try {
+      setIsLoading(true);
+      
       const res = await signIn('credentials', {
         redirect: false,
         password
       });
+
+      setIsLoading(false);
 
       if (res.ok) {
         Router.push('/admin/productos');
@@ -37,7 +42,7 @@ export default function Login() {
     />
     <form className='max-w-xs bg-white p-12 flex flex-col rounded-xl w-4/5' onSubmit={login}>
       <Input placeholder='Contraseña' type='password' onChange={({target: {value}}) => setPassword(value)} value={password}/>
-      <Button className='bg-red-500 text-white'>Iniciar Sesión</Button>
+      <Button className='bg-red-500 text-white' isLoading={isLoading}>Iniciar Sesión</Button>
     </form>
     {/*<style jsx global>{`
       #__next {

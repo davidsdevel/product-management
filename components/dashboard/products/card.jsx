@@ -6,6 +6,7 @@ import Button from '@/components/button';
 
 export default function ProductCard({id, photo, name, category, price, description, onSelect, onEdit, onDelete}) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   return <li className='w-full flex my-2 md:w-1/2 md:my-0 md:mb-4 md:px-2'>
     <div className='w-full flex p-2 bg-white rounded-xl shadow h-32'>
@@ -32,19 +33,27 @@ export default function ProductCard({id, photo, name, category, price, descripti
       <div className='mb-4'>
         <span className='text-lg font-bold'>¿Estas seguro de eliminar el producto?</span>
       </div>
-      <div>
-        <Button className='bg-red-500 text-white mr-4' onClick={async () => {
-          const _key = await deleteProduct(id);
+      <div className='flex items-center'>
+        <Button
+          className='bg-red-500 text-white mr-4'
+          isLoading={isLoading}
+          onClick={async () => {
+            setIsLoading(true);
 
-          if (!_key)
-            return alert('Error al eliminar');
+            const _key = await deleteProduct(id);
 
-          setShowDeleteModal(false);
-          onDelete(id);
-        }}>Si</Button>
-        <Button className='bg-slate-400 text-white mr-4' onClick={() => {
-          setShowDeleteModal(false);
-        }}>No</Button>
+            if (!_key)
+              return alert('Error al eliminar');
+            
+            setIsLoading(false);
+            setShowDeleteModal(false);
+            onDelete(id);
+          }}
+        >Si</Button>
+        <Button
+          className='bg-slate-400 text-white mr-4'
+          onClick={() => setShowDeleteModal(false)}
+        >No</Button>
       </div>
     </Modal>
   </li>;

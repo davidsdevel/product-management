@@ -8,6 +8,7 @@ import {getAllProducts} from '@/lib/dataFetchers';
 export default function Products({data, paging}) {
   const [products,setProducts] = useState(data);
   const [next, setNext] = useState(paging?.next);
+  const [isLoading, setIsLoading] = useState(false);
 
   return <div className='py-12'>
     <h3 className='my-4 font-bold text-2xl text-center'>Ultimos productos</h3>
@@ -19,12 +20,18 @@ export default function Products({data, paging}) {
     {
       next &&
       <div className='flex justify-center'>
-        <Button className='bg-slate-500 text-white' onClick={async () => {
-          const response = await getAllProducts({last: paging.next});
-
-          setProducts(prev => prev.concat(response.data));
-          setNext(response.paging.next);
-        }}>Ver más</Button>
+        <Button
+          className='bg-slate-500 text-white'
+          isLoading={isLoading}
+          onClick={async () => {
+            setIsLoading(true);
+            const response = await getAllProducts({last: paging.next});
+            
+            setIsLoading(false);
+            setProducts(prev => prev.concat(response.data));
+            setNext(response.paging.next);
+          }}
+        >Ver más</Button>
       </div>
     }
   </div>;

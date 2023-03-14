@@ -16,6 +16,7 @@ export default function UploadForm({isOpen, categories, onDone, onEditDone, edit
   const [productPrice, setProductPrice] = useState(editData?.price || '');
   const [productName, setProductName] = useState(editData?.name || '');
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [hasImage, setHasImage] = useState(false);
   const [image, setImage] = useState(null);
 
@@ -68,7 +69,11 @@ export default function UploadForm({isOpen, categories, onDone, onEditDone, edit
     if (productPrice !== editData.price)
       changes.price = +productPrice;
 
+    setIsLoading(true);
+
     await updateProduct(editData.key, changes);
+
+    setIsLoading(false);
 
     onEditDone({
       ...editData,
@@ -79,6 +84,8 @@ export default function UploadForm({isOpen, categories, onDone, onEditDone, edit
   const uploadProduct = async () => {
     if (!productName || !productPrice || !productDescription)
       return alert('Ingrese todos los datos');
+
+    setIsLoading(true);
 
     const {key, ...product} = await createProduct({
       name: productName,
@@ -93,6 +100,8 @@ export default function UploadForm({isOpen, categories, onDone, onEditDone, edit
       uploadImage(`products/${key}.webp`, blobRef.current),
       updateProduct(key, {photo: photoName})
     ]);
+
+    setIsLoading(false);
 
     onDone({
       ...product,
@@ -156,7 +165,7 @@ export default function UploadForm({isOpen, categories, onDone, onEditDone, edit
         ]}
       />
       <Input placeholder='Precio' type='number' onChange={({target: {value}}) => setProductPrice(value)} value={productPrice}/>
-      <Button className='bg-red-500 text-white mt-8' onClick={isEdit ? updateProductData : uploadProduct}>{isEdit ? 'Actualizar' : 'Subir'} Producto</Button>
+      <Button isLoading={isLoading} className='bg-red-500 text-white mt-8' onClick={isEdit ? updateProductData : uploadProduct}>{isEdit ? 'Actualizar' : 'Subir'} Producto</Button>
     </div>
     <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
       <Cropper image={image} onDone={blob => {
