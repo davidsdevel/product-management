@@ -1,6 +1,6 @@
 import { createApi } from 'unsplash-js';
 
-export default async function UnsplashAPI(req, res, query) {
+export default async function UnsplashAPI(req, res) {
   const {
     q,
     page,

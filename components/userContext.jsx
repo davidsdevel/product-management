@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect, useState, useRef} from 'react';
-import cookie from 'cookie';
+import cookie from 'js-cookie';
 
 const ClientContext = createContext();
 
@@ -24,23 +24,26 @@ export function UserProvider({children}) {
   const [customer, setCustomer] = useState(null);
 
   useEffect(() => {
-    const clientID = null;//cookie.get('_FE_CID');
+    const clientID = cookie.get('_FE_CID');
 
-    if (clientID) {
-      fetch(`/api/user/exchange?id=${clientID}`)
+    if (clientID && !customer) {
+      fetch(`/api/user/${clientID}`)
         .then(e => e.json())
-        .then(({token}) => fetch(`/api/user/${token}`))
-        .then(e => e.json())
-        .then(({data}) => {
-          setCustomer(data);
+        .then(({user}) => {
+          setCustomer(user);
           setIsLoading(false);
         });
     } else {
       setIsLoading(false);
     }
-  }, []);
+  }, [customer]);
 
-  const data = isLoading ? {loading: true} : {customer};
+  const data = isLoading
+    ? {loading: true}
+    : {
+        customer,
+        setCustomer
+      };
 
   return <ClientContext.Provider value={data}>{children}</ClientContext.Provider>;
 }

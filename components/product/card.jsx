@@ -3,6 +3,8 @@ import Modal from '@/components/modal';
 import Button from '@/components/button';
 import Input from '@/components/input';
 import {useCustomer} from '@/components/userContext';
+import cookie from 'js-cookie';
+
 
 export default function ProductCard({data}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,9 +15,13 @@ export default function ProductCard({data}) {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
 
-  const {customer} = useCustomer();
+  const {customer, setCustomer} = useCustomer();
 
-  const requestProduct = async () => {
+  const requestProduct = async e => {
+    e.preventDefault();
+    
+    setIsLoading(true);
+
     const messageData = {
       productID: data.key
     };
@@ -29,7 +35,7 @@ export default function ProductCard({data}) {
     }
 
     try {
-      const response = await fetch('/api/product-request', {
+      const response = await fetch('/api/request-product', {
         method: 'POST',
         headers: {
           'content-type': 'application/json'
@@ -40,7 +46,17 @@ export default function ProductCard({data}) {
       if (!response.ok)
         return alert('Error al hacer la petición');
 
-      //setIsSended(true);
+      const {user} = await response.json();
+      cookie.set('_FE_CID', user.key, {expires: 365});
+
+      if (!customer) {
+        setCustomer(user);
+      } else {
+        setIsOpen(true);
+      }
+
+      setIsSended(true);
+      setIsLoading(false);
       setTimeout(() => setIsOpen(false), 5000);
     } catch(err) {
       alert('Error al hacer la petición');
@@ -57,24 +73,29 @@ export default function ProductCard({data}) {
       <div className='flex flex-col items-start text-center md:text-left md:w-2/3'>
         <span className='text-sm font-bold w-full text-gray-400'>Descripción</span>
         <h2 className='flex-grow'>{data.description}</h2>
-        <Button className='bg-slate-400 mt-4' onClick={() => {
-          //TODO: Don't request user data when user exists
-
-          setIsOpen(true);
-        }}>Consultar disponibilidad</Button>
+        <Button
+          className='bg-slate-400 mt-4'
+          isLoading={isLoading}
+          onClick={async e => {
+            if (customer)
+              await requestProduct(e);
+            else
+              setIsOpen(true);
+          }}
+        >Consultar disponibilidad</Button>
       </div>
     </div>
     <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
       {
         isSended
-          ? <div>
-              <span>La información le será enviada via WhatsApp</span>
+          ? <div className='w-40 px-2 py-4 text-center'>
+              <span>La información le será enviada via <span className='font-bold'>WhatsApp</span></span>
             </div>
-          : <form onSubmit={e => e.preventDefault()} className='flex flex-col'>
+          : <form onSubmit={requestProduct} className='flex flex-col'>
               <Input placeholder='Nombre' onChange={({target: {value}}) => setName(value)}/>
               <Input placeholder='Correo electronico' type='email' onChange={({target: {value}}) => setEmail(value)}/>
               <Input placeholder='Numero de WhatsApp' type='phone' onChange={({target: {value}}) => setPhone(value)}/>
-              <Button className='bg-red-500 text-white' onClick={requestProduct}>Enviar</Button>
+              <Button className='bg-red-500 text-white' isLoading={isLoading}>Enviar</Button>
             </form>
       }
     </Modal>
