@@ -49,13 +49,16 @@ function Categories() {
       </ul>
     </div>
     <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-      <CategoryForm onAddCategory={category => {
-        setCategories(prev => {
-          return prev.concat(category);
-        });
+      <CategoryForm
+        onAddCategory={category => {
+          setCategories(prev => {
+            return prev.concat(category);
+          });
 
-        setIsModalOpen(false);
-      }}/>
+          setIsModalOpen(false);
+        }}
+        isOpen={isModalOpen}
+      />
     </Modal>
     <style jsx global>{`
       body {
