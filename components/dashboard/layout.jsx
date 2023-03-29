@@ -16,6 +16,7 @@ export default function Layout({children}) {
 
   return <div className='flex h-full w-full absolute items-start'>
     <Nav/>
+    <div className='w-56'/>
     <div className='flex-grow'>
       {children}
     </div>

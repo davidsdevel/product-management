@@ -46,7 +46,7 @@ export default function DashboardNav() {
   }, [isOpen]);
 
   return <>
-    <nav className='transition-all duration-300 ease z-10 bg-white fixed h-full flex flex-col top-0 -left-full shadow py-4 px-2 md:relative md:left-0' ref={navRef}>
+    <nav className='transition-all duration-300 ease z-10 bg-white fixed h-full flex flex-col top-0 -left-full shadow py-4 px-2 md:left-0' ref={navRef}>
       <ul className='flex flex-col items-center flex-grow'>
         {
           links.map(({name, href, icon}, i) => {
