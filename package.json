@@ -11,6 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sentry/nextjs": "^7.45.0",
     "bcrypt": "^5.1.0",
     "deta-base-orm": "^0.5.3",
     "firebase": "^9.17.2",

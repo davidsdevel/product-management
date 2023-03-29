@@ -52,7 +52,6 @@ function Categories() {
       <CategoryForm
         onAddCategory={category => {
           setCategories(prev => prev.concat(category));
-
           setIsModalOpen(false);
         }}
         isOpen={isModalOpen}

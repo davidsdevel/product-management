@@ -106,3 +106,5 @@ dist
 
 
 plan.txt
+# Sentry
+.sentryclirc
