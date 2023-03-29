@@ -23,6 +23,7 @@ export default function CategoryForm({isOpen, onAddCategory}) {
         setName('');
         setImage('');
         setHasImage(false);
+        setIsLoading(false);
       }, 300);
     }
   }, [isOpen]);
