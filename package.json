@@ -16,7 +16,7 @@
     "deta-base-orm": "^0.5.3",
     "firebase": "^9.17.2",
     "firebase-admin": "^11.5.0",
-    "graphql": "^16.6.0",
+    "graphql": "^16.8.1",
     "graphql-yoga": "^3.7.0",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^9.0.0",
